@@ -1,0 +1,1 @@
+console.log("Practice2 connected");
