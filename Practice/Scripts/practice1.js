@@ -30,8 +30,9 @@ if (mystery[0] === 'P' && mystery.length > 5 && mystery.indexOf('7') !== -1) {
 
 let firstname = prompt("Enter firstname")
 // If user enters again, store the new value in firstname.
-if (!firstname) {
-    prompt("Try again")
+// corrected
+while (!firstname) {
+    firstname = prompt("Try again")
 };
 
 
@@ -126,9 +127,10 @@ function check_new(animated_movies) {
 }
 
 // This middle check repeats the first one, so this message can never run.
+// fixed
 if (animated_movies.every(m => m.year_of_release >= 2000)) {
     console.log("All movies are new")
-} else if (animated_movies.every(m => m.year_of_release >= 2000)) {
+} else if (animated_movies.some(m => m.year_of_release >= 2000)) {
     console.log("Some movies are new and some are old")
 } else {
     console.log("All movies are old")
@@ -136,7 +138,9 @@ if (animated_movies.every(m => m.year_of_release >= 2000)) {
 
 const nums = [2, 3.5, 9.9, 1.9, 0.5]
 // This is not a real average. Add all numbers first, then divide by length.
-const avg = nums.reduce((avg, num) => (avg + num)/2)
+// fixed
+const sum = nums.reduce((sum, num) => (sum + num), 0);
+const avg = sum/ nums.length;
 const min = nums.reduce((min, num) => {
     if (num < min){
         return num;
@@ -156,7 +160,9 @@ const highest_rated = animated_movies.reduce((best_movie, curr_movie) => {
 const avg_rating = function(movie_list){
     let ratings = movie_list.map(m => m.rating);
     // Same issue here: total of ratings / number of ratings gives the real average.
-    return ratings.reduce((avg_rating, curr_rating) => (avg_rating + curr_rating)/2)
+    // fixed
+    let total_ratings = movie_list.reduce((total_rating, curr_rating) => (total_rating + curr_rating), 0);
+    return total_ratings / ratings.length;
 }
 avg_rating(animated_movies);
 avg_rating(animated_movies.filter(m => m.year_of_release >= 2015))

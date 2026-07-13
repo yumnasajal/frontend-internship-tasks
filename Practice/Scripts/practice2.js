@@ -88,23 +88,26 @@ console.log(account.balance);
 
 // 2. Fix this using closures so each call increments independently
 // This always starts from 0, so every new call returns 1.
-function counterBug() {
-  let count = 0;
-  count++;
-  return count;
-}
-console.log(counterBug());
+// I commented this as the correct version of this functoin is already written below
+
+// function counterBug() {
+//   let count = 0;
+//   count++;
+//   return count;
+// }
+// console.log(counterBug());
 //  // always 1 — fix it so it increases across calls
 
 // Reusing the same function name is okay for practice, but confusing in real projects.
-function counterBug(){
+// name changed
+function createCounter(){
     let count = 0;
     return function() {
         count++;
         return count;
-    }
+    };
 }
-const increment = counterBug();
+const increment = createCounter();
 console.log(increment());
 console.log(increment());
 
@@ -186,7 +189,5 @@ while (true){
  
 }
 console.log("Exiting Program");
-
-
 
 
