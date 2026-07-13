@@ -87,6 +87,7 @@ console.log(account.getBalance());
 console.log(account.balance);
 
 // 2. Fix this using closures so each call increments independently
+// This always starts from 0, so every new call returns 1.
 function counterBug() {
   let count = 0;
   count++;
@@ -95,6 +96,7 @@ function counterBug() {
 console.log(counterBug());
 //  // always 1 — fix it so it increases across calls
 
+// Reusing the same function name is okay for practice, but confusing in real projects.
 function counterBug(){
     let count = 0;
     return function() {
