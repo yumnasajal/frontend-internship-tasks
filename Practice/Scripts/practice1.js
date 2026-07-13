@@ -174,3 +174,25 @@ const {nickname: my_nickname, other_nicknames: my_nicknames , born: birth_year =
 function fullname({first_name, last_name}){
     return `${first_name} ${last_name}`
 }
+
+// reduce can return an obj or an array too
+nums.push(3, 4, 4, 3);
+let ccount = nums.reduce((acc, num) => {
+    acc[num] = (acc[num] || 0) + 1;
+    return acc;
+}, {});
+
+// 1. Given this array, use .filter() and .map() to get names of students who scored above 80,
+// converted to uppercase
+let students = [
+  { name: "ali", score: 85 },
+  { name: "sara", score: 72 },
+  { name: "zara", score: 91 }
+];
+
+const high_acheivers = students.filter(m => m.score >80).map(m => m.name.toUpperCase())
+const total_score = students.reduce((acc, student) => {
+    return acc + student.score 
+}, 0)
+
+

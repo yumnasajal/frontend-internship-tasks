@@ -185,6 +185,34 @@ while (true){
 }
 console.log("Exiting Program");
 
+//  Write a recursive function countDown(n) that prints numbers from n down to 1, then explain what the base case is and why it's needed.
+function countdown(num){
+    if (num < 1) return 1;
+    console.log(num);
+    countdown(num-1);
+}
+
+//call, bind, apply 
+function greet(greeting, punctuation){
+    console.log(`${greeting}, I'm ${this.name}${punctuation}`);
+}
+const person1 = {name: "Yumna"};
+const person2 = {name: "Yum"};
+
+greet.call(person1, "HI", "!!");
+greet.apply(person1, ["Hi" , "!!!"]);
+
+// pre baking 
+const greet_bound = greet.bind(person1, "Hell0", " :)")
+greet_bound();
+
+// args after 
+const greet_bind = greet.bind(person1);
+greet_bind("Yooo" , " ;)");
+
+//hybrid 
+const greetHello = greet.bind(person1, "Hello"); 
+greetHello("!");
 
 
 

@@ -4,14 +4,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Javascript Practice</title>
+    <title>Javascript Practice-DOM selecting</title>
+    <style>
+        body {
+            width: 80%;
+            margin: 0 auto;
+        }
+        h1 {
+            color: olive;
+        }
+        #banner {
+            width: 100%;
+        }
+        img.square {
+            width: 400px;
+            height: 400px;
+            object-fit: cover;
+
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Scripts File!</h1>
+    <h1 style="color: olivedrab">Scripts File!</h1>
+    <main class="container">
+
+        <h1>Silkie Chickens</h1>
+
+        <img id="banner" src="image1.png" alt="Silkie Chicken">
+        <p>
+            The <b>Silkie</b> (sometimes spelled <b>Silky</b>) is a
+            <a href="wiki/List_of_chicken_breeds" title="List of chicken breeds">breed</a> of <a href="/wiki/Chiken"
+                title="Chicken">chicken</a> named for its typically fluffy
+            <a href="/wiki/plumage" title="Plumage">plumage</a>, which is said to feel like <a href="wiki/Silk"
+                title="Silk">silk</a>silk and satin.
+            The breed has several other unusual qualities, such as black skin
+            and bones, blue earlobes, and five toes on each foot.
+        </p>
+
+        <p>
+            They are often exhibited in <a href="/wiki/Poultry" title="Poultry">poultry</a> shows, and appear in
+            various
+            colors. In addition to their distinctive physical characteristics,
+            Silkies are well known for exceptionally <a href="/wiki/Broodiness" title="Broodiness">broody</a> and care
+            for young well. </p>
+
+
+        <div class="contents" id="toc" role="navigation" aria-labelledby="mw-toc-heading">
+            <input type="checkbox" role="button" id="toctogglecheckbox" class="toctogglecheckbox" stye="display:none" />
+            <div class="toctitle" lang="en" dir="ltr">
+                <h2 id="mw-toc-heading">Contents</h2><span class="toctogglespan"><label for="toctogglecheckbox"
+                        class="toctogglelabel"></label></span>
+            </div>
+            <ul>
+                <li><a href="#">History</a></li>
+
+                <li>
+                    <a href="#">Characteristics</a>
+                    <ul>
+                        <li><a href="#">2.1 Bantams</a></li>
+                        <li><a href="#">2.2 Polydactyly</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#">In cuisine</a></li>
+                <li><a href="#">References</a></li>
+                <li><a href="#">Further reading</a></li>
+            </ul>
+
+        </div>
+
+
+        <h2>History</h2>
+
+        <p>
+            It is unknown exactly where or when these fowl with their singular
+            combination of attributes first appeared, but the most documented
+            point of origin is ancient China.
+        </p>
+
+
+        <img class="square"  src="image2.png" alt="Silkie Chicken">
+        <img  class="square" src="image3.png" alt="Silkie Chicken">
+        <input type="text">
+    </main>
 
     <script src="../Scripts/practice1.js"></script>
     <script src="../Scripts/practice2.js"></script>
+    <script src="../Scripts/practice3.js"></script>
 </body>
 
 </html>
