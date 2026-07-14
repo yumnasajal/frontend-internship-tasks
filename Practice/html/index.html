@@ -10,28 +10,71 @@
             width: 80%;
             margin: 0 auto;
         }
+
+        .box {
+            width: 100px;
+            border: 1px solid grey;
+        }
+
+        .purple {
+            color: #7b07ff;
+        }
+
+        .border {
+            border: 3px solid grey;
+        }
+
+        .highlight {
+            background-color: beige;
+        }
+
         h1 {
             color: olive;
         }
+
         #banner {
             width: 100%;
         }
+
         img.square {
             width: 400px;
             height: 400px;
             object-fit: cover;
 
         }
+
+        .list_highlight li {
+            background-color: #b67abf;
+        }
+
+        .highlight {
+            background-color: #7697a4 !important;
+        }
     </style>
 </head>
 
 <body>
-    <h1 style="color: olivedrab">Scripts File!</h1>
+    <section>
+        <h1>Scripts File! for mini-task</h1>
+        <!-- Next step: make small DOM tasks here, not only prompt and console work. -->
+        <h3>Add your Name</h3>
+        <p>You have to enter a name to add it in the list of names:</p>
+        <form action="#">
+            <label for="name">Enter your name:</label>
+            <input type="text" id="name" placeholder="Name">
+            <button type="submit" id="add_button">Add Name</button>
+        </form>
+        <p id="message"></p>
+        <h3>Names list</h3>
+        <ul class="name_list" id="name_list">
+        </ul>
+    </section>
+    <h1 style="color: olivedrab">DOM Practice!</h1>
     <main class="container">
 
         <h1>Silkie Chickens</h1>
 
-        <img id="banner" src="image1.png" alt="Silkie Chicken">
+        <img id="banner" src="Assets/image1.png" alt="Silkie Chicken">
         <p>
             The <b>Silkie</b> (sometimes spelled <b>Silky</b>) is a
             <a href="wiki/List_of_chicken_breeds" title="List of chicken breeds">breed</a> of <a href="/wiki/Chiken"
@@ -60,7 +103,7 @@
                 <li><a href="#">History</a></li>
 
                 <li>
-                    <a href="#">Characteristics</a>
+                    <a href="#" class="highlight">Characteristics</a>
                     <ul>
                         <li><a href="#">2.1 Bantams</a></li>
                         <li><a href="#">2.2 Polydactyly</a></li>
@@ -68,7 +111,7 @@
                 </li>
 
                 <li><a href="#">In cuisine</a></li>
-                <li><a href="#">References</a></li>
+                <li><a href="#" class="highlight">References</a></li>
                 <li><a href="#">Further reading</a></li>
             </ul>
 
@@ -84,17 +127,24 @@
         </p>
 
 
-        <img class="square"  src="image2.png" alt="Silkie Chicken">
-        <img  class="square" src="image3.png" alt="Silkie Chicken">
+        <img class="square" src="Assets/image2.png" alt="Silkie Chicken">
+        <img class="square" src="Assets/image3.png" alt="Silkie Chicken">
         <input type="text">
+        <ul class="list_highlight">
+            <li>Hello</li>
+            <li class="highlight">Hello</li>
+            <li>Hello</li>
+            <li>Hello</li>
+            <li class="highlight">Hello</li>
+            <li>Hello</li>
+        </ul>
+
     </main>
-    <h1>Scripts File!</h1>
-    <!-- Next step: make small DOM tasks here, not only prompt and console work. -->
 
     <script src="../Scripts/data.js"></script>
-    <script src="../Scripts/mini_tasks.js"></script>
     <script src="../Scripts/practice1.js"></script>
     <script src="../Scripts/practice2.js"></script>
+    <script src="../Scripts/mini_tasks.js"></script>
     <script src="../Scripts/practice3.js"></script>
 </body>
 

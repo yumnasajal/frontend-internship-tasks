@@ -22,14 +22,33 @@ for (let link of p_links) {
 
 // .innerText .innerHTML(+=, ) .textContent 
 // .href .src .id .class .type .style (Attributes)
+// .getAttribute .setAttribute (Attributes)
 
 const first_link = document.querySelector('a');
-first_link.setAttribute('href', 'http://www.google.com')
+first_link.setAttribute('href', 'http://www.google.com') // .getAttribute .removeAttribute
 
 const h1 = document.querySelector('h1');
 h1.style.color = 'orange';
 
 for (let link of p_links){
-    link.style.color = 'rgb(0, 108, 134)'; 
-
+    link.style.color = 'rgb(0, 108, 134)';
 }
+
+// window.getComputedStyle(h1).color
+
+// classes:
+// element.classList
+// .add .remove .contain .toggle
+const h2 = document.querySelector('h2');
+h2.classList.add('purple');
+
+const list_li = document.querySelectorAll('.list_highlight li');
+for (let li of list_li){
+    li.classList.toggle('highlight');
+}
+
+// creating and removing elements;
+// document.createElement('div')
+
+
+

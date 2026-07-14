@@ -22,3 +22,4 @@ const taskTodos = [
     { id: 3, title: "Practice DOM selectors", done: false },
     { id: 4, title: "Make a small form", done: true }
 ];
+

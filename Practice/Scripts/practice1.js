@@ -4,7 +4,7 @@ console.log("Practice1 connected");
 console.warn("Donot touch");
 console.error("Donot touch");
 
-let you = "mine";
+let you = "mine";                     
 
 let phrase = prompt("Enter a phrase");
 if (phrase === 'stop') {
@@ -23,7 +23,7 @@ let mystery = 'Pete7ingo'; //CHANGE THIS VALUE TO MAKE THE CONDITIONAL BELOW TRU
 
 
 
-// LEAVE THIS CODE ALONE! (pretty please)
+// LEAVE THIS CODE ALONE! (pretty please)  
 if (mystery[0] === 'P' && mystery.length > 5 && mystery.indexOf('7') !== -1) {
     console.log("YOU GOT IT!!!");
 }
