@@ -14,7 +14,7 @@
         rel="stylesheet">
     <style>
         body {
-            background-image: url(Assets/trendy-background-ideas-cover.jpg);
+            background-image: url(../Assets/trendy-background-ideas-cover.jpg);
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -22,7 +22,7 @@
         #main {
             background-color: rgba(255, 255, 255, 0.751);
             max-width: 600px;
-            margin: 13px auto;
+            margin: 9px auto;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -55,6 +55,47 @@
 
         .welcome-heading {
             text-shadow: 1px 1px 3px #9b3171b6;
+        }
+
+        .sub-heading {
+            font-family: "Yuyu", sans-serif;
+            font-style: normal;
+            font-weight: 200;
+            font-size: 25px;
+            color: #1C5FB0;
+        }
+
+        .extra-div {
+            border-radius: 50%;
+            background-color: transparent;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-color: #1C5FB0;
+            background-color: #48515c;
+            color: whitesmoke;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-picture:hover {
+            box-shadow: 0 0 2px 2px #5a96f693;
+            color: #0a274a;
+        }
+
+        .profile-picture:hover .extra-div {
+            background-image: linear-gradient(45deg, #8bafe9, #192e489d);
+        }
+
+        .profile-image {
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
         }
 
         .input-box .form-control,
@@ -107,14 +148,33 @@
             transform: translateY(-1px)
         }
 
-        .continue-button {
+        .google-img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .continue-google-button {
             background-color: white;
             border: none;
             transition: all 0.3s ease;
         }
 
-        .continue-button:hover {
-            background: linear-gradient(45deg, #E7B1D1, #3D87E1);
+        .continue-google-button:hover {
+            background: linear-gradient(45deg, #f16458 5%, #fac936 20%, #40aa5c 50%, #5a96f6 100%);
+            color: white;
+            border-color: #9B3171;
+            box-shadow: 0 0 3px 2px #e1dcdf;
+        }
+
+        .continue-github-button {
+            background-color: white;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .continue-github-button:hover {
+            background: linear-gradient(45deg, #1a1819, #2f2f30);
             color: white;
             border-color: #9B3171;
             box-shadow: 0 0 3px 2px #e1dcdf;
@@ -124,15 +184,25 @@
 
 <body>
     <section class="container">
-        <div id="main" class="border rounded border-3 rounded-3 border-light shadow gap-2 justify-content-center">
+        <div id="main" class="border rounded border-3 rounded-3 border-light shadow gap-1 justify-content-center">
             <div class="d-flex justify-content-center align-items-center gap-1 mt-4">
-                <img src="Assets/Screenshot 2026-07-06 020352.png" alt="Novara logo" class="logo-icon img-fluid">
+                <img src="../Assets/Screenshot 2026-07-06 020352.png" alt="Novara logo" class="logo-icon img-fluid">
                 <h3 class="mb-0"><span class="fw-bold novara-n">N</span><span class="novara-ovara">ovara</span></h3>
             </div>
-            <h2 class="fw-bold welcome-heading">Create Account</h2>
-            <p class="display-8  fw-normal">Join us to get started</p>
+            <h2 class="fw-bold welcome-heading mb-0">Create Account</h2>
+            <p class="display-8  fw-normal sub-heading mb-0">Join us to get started</p>
+            <label for="profile_image"
+                class="profile-picture rounded-circle border text-center d-flex flex-column align-items-center justify-content-center p-1 mb-2">
+                <div class="extra-div d-flex flex-column align-items-center justify-content-center">
+                    <i class="fa-solid fa-image mt-3 fs-3"></i>
+                    <p class="picture-text fs-6 lh-1 mt-1">Add your avatar</p>
+                </div>
+            </label>
+
+            <input type="file" id="profile_image" accept="image/*" hidden>
             <div class="container">
-                <form action="#" class="mx-md-5 mx-sm-4 mx-3">
+                <form action="#" class="mx-md-5 mx-sm-4 mx-3" id="signup_form">
+
                     <div class="row mb-2 g-2">
                         <div class="col-md form-group input-group input-box">
                             <span class="input-group-text bg-white border-end-0 pe-0">
@@ -151,33 +221,36 @@
                         <span class="input-group-text bg-white border-end-0 pe-0">
                             <i class="fa-regular fa-envelope text-secondary"></i>
                         </span>
-                        <input type="email" placeholder="Email Address" class="form-control border-start-0" name="Email"
-                            required>
+                        <input type="email" placeholder="Email Address *" class="form-control border-start-0"
+                            name="Email" id="email">
                     </div>
                     <div class="form-group input-group input-box mb-2">
                         <span class="input-group-text bg-white border-end-0 pe-0">
                             <i class="fa-solid fa-lock text-secondary"></i>
                         </span>
-                        <input type="password" placeholder="Password" class="form-control border-start-0 border-end-0"
-                            minlength="8" required>
+                        <input type="password" placeholder="Password (must: 8 chars, 1 number, 1 uppercase letter)*"
+                            class="form-control border-start-0 border-end-0" id="password">
                         <span class="input-group-text bg-white border-start-0 ps-0">
                             <button type="button" class="btn btn-light bg-white border-0 eye-button p-0">
                                 <i class="eye-icon fa-regular fa-eye-slash text-secondary"></i>
                             </button>
                         </span>
                     </div>
+                    <ul id="p_checklist" class="text-danger py-0 my-0">
+                    </ul>
                     <div class="form-group input-group input-box mb-2">
                         <span class="input-group-text bg-white border-end-0 pe-0">
                             <i class="fa-solid fa-lock text-secondary"></i>
                         </span>
-                        <input type="password" placeholder="Confirm Password"
-                            class="form-control border-start-0 border-end-0">
+                        <input type="password" placeholder="Confirm Password *"
+                            class="form-control border-start-0 border-end-0" id="confirm_password">
                         <span class="input-group-text bg-white border-start-0 ps-0">
                             <button type="button" class="btn btn-light bg-white border-0 eye-button p-0">
                                 <i class="eye-icon fa-regular fa-eye-slash text-secondary"></i>
                             </button>
                         </span>
                     </div>
+                    <ul id="cp_checklist" class="text-danger py-0 my-0"></ul>
                     <div class="form-check my-3 ">
                         <input type="checkbox" class="form-check-input checkbox-remember-me" id="checkbox1">
                         <label for="checkbox1" class="form-check-label">I agree to the<span
@@ -186,7 +259,9 @@
                                     Policy</a></span></label>
                     </div>
 
-                    <button type="submit" class="login-button btn btn-primary w-100 mb-2 mt-1 border">Sign Up</button>
+                    <button type="submit" class="login-button btn btn-primary w-100 mb-1 mt-1 border"
+                        id="submit_button">Sign Up</button>
+                    <p id="required_msg"></p>
                     <div class="row align-items-center flex-nowrap my-2">
                         <div class="col flex-shrink">
                             <hr class="m-0">
@@ -197,9 +272,11 @@
                         </div>
                     </div>
                     <div class="row align-items-center gap-3 mx-1 my-2 text-dark">
-                        <button class="continue-button shadow-sm col-sm btn" type="button"><span class="me-1"><i
-                                    class="fa-brands fa-google"></i></span>Google</button>
-                        <button class="continue-button shadow-sm col-sm btn" type="button"><span class="me-1"><i
+                        <button
+                            class="continue-google-button shadow-sm col-sm btn d-inline-flex align-items-center justify-content-center"
+                            type="button"><span class="me-1"><img class="img-fluid google-img"
+                                    src="../Assets/google_logo_g_logo_icon_159348.webp" alt=""></span>Google</button>
+                        <button class="continue-github-button shadow-sm col-sm btn" type="button"><span class="me-1"><i
                                     class="fa-brands fa-github"></i></span>Github</button>
                     </div>
                     <div class="text-center my-4">
@@ -216,6 +293,7 @@
         </form>
     </section>
     <script async src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../Scripts/app.js"></script>
 </body>
 
 </html>

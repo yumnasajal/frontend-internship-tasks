@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Javascript Practice-DOM selecting</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
     <style>
         body {
             width: 80%;
@@ -36,7 +37,7 @@
             width: 100%;
         }
 
-        img.square {
+        img .square {
             width: 400px;
             height: 400px;
             object-fit: cover;
@@ -70,6 +71,22 @@
         </ul>
     </section>
     <h1 style="color: olivedrab">DOM Practice!</h1>
+    <section>
+        <h2>Events</h2>
+        <button ondblclick="alert('you clicked me!'); console.log('boo')">Click Me</button>
+        <button id="btn2">Click Me 2</button>
+        <button id="btn3">Click Me 3</button>
+        <input type="text">
+    </section>
+    <section>
+        <h2>Form</h2>
+        <form action="\shelter" id="shelter_form">
+            <input type="text" id="cat_name">
+            <button>Submit</button>
+        </form>
+        <h4>Available Cats:</h4>
+        <ul id="cats_list"></ul>
+    </section>
     <main class="container">
 
         <h1>Silkie Chickens</h1>
@@ -138,13 +155,64 @@
             <li class="highlight">Hello</li>
             <li>Hello</li>
         </ul>
+        <section>
+            <div class="column is-three-fifths is-offset-one-fifth">
 
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-48x48">
+                                    <img src="Assets/9978844.png" alt="Placeholder image" />
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">Ping-Pong Score Keeper</p>
+                                <p class="subtitle is-6">Manage your game scores and see who wins</p>
+                            </div>
+                        </div>
+
+                        <div class="content">
+                            <h1><span id="p1score">0</span> to <span id="p2score">0</span></h1>
+                            <p>Use the buttons below to control scores.</p>
+                            <label for="winning_score" class="label is-large is-inline">Select winning score:</label>
+                            <div class="select is-rounded is-info">
+                                <select id="winning_score">
+                                    <option value="3">3</option>
+                                    <option value="5">5</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                </select>
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                    <footer class="card-footer">
+                        <button id="p1button" class="card-footer-item button is-success is-dark has-text-white-bis">+1
+                            Player 1</button>
+                        <button id="p2button" class="card-footer-item button is-info is-dark has-text-white-bis">+1
+                            Player 2</button>
+                        <button id="reset_button"
+                            class="card-footer-item button is-danger is-dark has-text-white-bis">Reset</button>
+                    </footer>
+                </div>
+
+            </div>
+        </section>
+        <section>
+            <h1>Practice Qs</h1>
+            <div class="border column is-three-fifths is-offset-one-fifth is-flex is-justify-content-space-between" id="box">Some Box
+                <button class="button is-primary" id="toggle_button">toggle</button>
+            </div>
+        </section>
     </main>
 
-    <script src="../Scripts/data.js"></script>
+    <!-- <script src="../Scripts/data.js"></script>
     <script src="../Scripts/practice1.js"></script>
     <script src="../Scripts/practice2.js"></script>
-    <script src="../Scripts/mini_tasks.js"></script>
+    <script src="../Scripts/mini_tasks.js"></script> -->
     <script src="../Scripts/practice3.js"></script>
 </body>
 
