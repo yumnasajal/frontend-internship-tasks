@@ -1,4 +1,5 @@
 // google button 
+// localStorage.clear();
 const google_button = document.querySelector('.continue-google-button');
 const google_icon = document.createElement('i');
 google_icon.classList.add('fa-brands', 'fa-google', 'me-1');
@@ -38,13 +39,15 @@ const password = {
     isEmpty() { return !this.value; },
     filled: false
 }
+
 const email = {
     input: document.querySelector('#email'),
     name: "Email",
     get value() { return this.input.value.trim(); },
     isEmpty() { return !this.value; },
-    filled: false
+    filled: false,
 }
+
 const confirm_password = {
     input: document.querySelector('#confirm_password'),
     name: "Confirm Password",
@@ -52,10 +55,22 @@ const confirm_password = {
     isEmpty() { return !this.value; },
     filled: false
 }
+
+function save_users(user_array) {
+    localStorage.setItem('users', JSON.stringify(user_array));
+}
+
+function get_users() {
+    const stored_users = localStorage.getItem("users");
+    return stored_users ? JSON.parse(stored_users) : [];
+}
+
 const signup_form = document.querySelector('#signup_form');
 const login_form = document.querySelector('#login_form');
 const req_msg = document.querySelector('#required_msg');
 const submit_button = document.querySelector('#submit_button');
+let users = get_users();
+let profile_img = "";
 
 const p_checklist = document.querySelector('#p_checklist');
 const p_checklist_items = [
@@ -63,12 +78,26 @@ const p_checklist_items = [
     { name: "upper_check", message: "Atleast 1 uppercase letter", check() { return password.value !== password.value.toLowerCase() ? true : false } },
     { name: "number_check", message: "Atleast 1 number", check() { return [...password.value].some(char => (char !== ' ') && (!isNaN(char))); } }
 ];
+
+const e_checklist_items = [
+    {
+        name: "validity_check", message: "Email not valid", check() {
+            const parts = email.value.split('@');
+            if (parts.length !== 2 || !parts.every(part => part) || !parts[1].includes('.')) return false;
+            const end = email.value.split('.').pop();
+            if (!end || end.length < 2 || !isNaN(end)) return false;
+            return true;
+        }
+    }
+]
+
 if (signup_form) {
     signup_form.addEventListener('submit', signupCheck);
 }
 if (login_form) {
     login_form.addEventListener('submit', loginCheck);
 }
+
 function showError(field) {
     field.input.classList.add('border-danger');
     field.input.previousElementSibling.classList.add('border-danger');
@@ -76,6 +105,7 @@ function showError(field) {
         field.input.nextElementSibling.classList.add('border-danger');
     }
 }
+
 function removeError(field) {
     field.input.classList.remove('border-danger');
     field.input.previousElementSibling.classList.remove('border-danger');
@@ -91,99 +121,85 @@ function signupCheck(e) {
     if (password.isEmpty() || !passChecklist(p_checklist_items)) {
         empty_fields.push(password);
     }
-    if (email.isEmpty()) {
+    if (email.isEmpty() || !passChecklist(e_checklist_items)) {
         empty_fields.push(email);
     }
     if (confirm_password.input && (confirm_password.isEmpty() || !passChecklist(cp_checklist_items))) {
         empty_fields.push(confirm_password);
     }
     if (empty_fields.length > 0) {
-
-
         empty_fields.forEach(field => {
             showError(field);
         });
-
-
-        let message = empty_fields
-            .map(field => field.name)
-            .join(", ");
-
-
+        let message = empty_fields.map(field => field.name).join(", ");
         const error_icon = document.createElement('i');
         error_icon.classList.add('fa-solid', 'fa-exclamation', 'me-2');
-
-
         req_msg.textContent = "";
-
-        req_msg.append(
-            error_icon,
-            `${message} ${empty_fields.length > 1 ? "are" : "is"} required.`
-        );
-
-
+        req_msg.append(error_icon, `${message} ${empty_fields.length > 1 ? "are" : "is"} required.`);
         req_msg.classList.remove('text-success');
         req_msg.classList.add('text-danger');
         submit_button.disabled = true;
-
         return;
-
-
     }
     req_msg.textContent = "";
     console.log('submitted');
+    first_name = document.querySelector('#first_name').value;
+    last_name = document.querySelector('#last_name').value;
+    const new_user = { first_name, last_name, email: email.value, password: password.value, profile_picture: profile_img };
+    users.push(new_user);
+    save_users(users);
 }
 
 function loginCheck(e) {
-
     e.preventDefault();
-
     let empty_fields = [];
-
     if (password.isEmpty()) {
         empty_fields.push(password);
     }
-
     if (email.isEmpty()) {
         empty_fields.push(email);
     }
-
-
     if (empty_fields.length > 0) {
-
-        empty_fields.forEach(field => {
-            showError(field);
-        });
-
-        let message = empty_fields
-            .map(field => field.name)
-            .join(", ");
-
-
-        req_msg.textContent =
-            `${message} ${empty_fields.length > 1 ? "are" : "is"} required.`;
+        empty_fields.forEach(field => { showError(field); });
+        let message = empty_fields.map(field => field.name).join(", ");
+        req_msg.textContent = `${message} ${empty_fields.length > 1 ? "are" : "is"} required.`;
         req_msg.classList.add('text-danger');
         submit_button.disabled = true;
         return;
     }
+
     req_msg.textContent = "";
-    console.log("Login submitted");
+    let login_check = users.some(user => (
+        user.password === password.value && user.email === email.value
+    ));
+    if (!login_check) {
+        const error_icon = document.createElement('i');
+        error_icon.classList.add('fa-solid', 'fa-exclamation', 'me-2');
+        req_msg.textContent = "";
+        req_msg.append(error_icon, `Email and Password donot match.`);
+        req_msg.classList.remove('text-success');
+        req_msg.classList.add('text-danger');
+    }
+    else {
+        console.log('Login Successful')
+    }
+
 }
 
+
 email.input.addEventListener('input', () => {
-    if (!email.isEmpty()) {
+    if (!email.isEmpty() && passChecklist(e_checklist_items)) {
         removeError(email);
         email.filled = true;
         checkAllFieldsFilled();
-
     }
     else {
         email.filled = false;
         showError(email);
     }
 });
-if (confirm_password.input) {
 
+if (confirm_password.input) {
     confirm_password.input.addEventListener('input', () => {
         if (!confirm_password.isEmpty() && passChecklist(cp_checklist_items)) {
             removeError(confirm_password);
@@ -196,6 +212,7 @@ if (confirm_password.input) {
         }
     });
 }
+
 password.input.addEventListener('input', () => {
     if (!password.isEmpty() && passChecklist(p_checklist_items)) {
         removeError(password);
@@ -209,7 +226,6 @@ password.input.addEventListener('input', () => {
 });
 
 function checkAllFieldsFilled() {
-
     if (email.filled && password.filled && (!confirm_password.input || confirm_password.filled)) {
         submit_button.disabled = false;
         req_msg.textContent = "";
@@ -217,11 +233,13 @@ function checkAllFieldsFilled() {
 }
 
 // password requirements
-if (confirm_password.input) {
+
+if (p_checklist) {
     password.input.addEventListener('change', function () {
         inputChecklist(p_checklist, p_checklist_items);
     })
 }
+
 function passChecklist(checklist) {
     return checklist.every(item => item.check());
 }
@@ -235,13 +253,20 @@ function inputChecklist(checklist, checklist_items) {
         checklist.appendChild(l_item);
     }
 }
+
 const cp_checklist = document.querySelector('#cp_checklist');
 const cp_checklist_items = [{ name: "password_match", message: "Passwords donot match", check() { return password.value === confirm_password.value } }];
+const e_checklist = document.querySelector('#e_checklist');
 
-if (confirm_password.input) {
+if (cp_checklist) {
     confirm_password.input.addEventListener('change', function () {
         inputChecklist(cp_checklist, cp_checklist_items);
     });
+}
+if (e_checklist){
+    email.input.addEventListener('change', function () {
+        inputChecklist(e_checklist, e_checklist_items);
+    })
 }
 
 // Avatar update
@@ -251,20 +276,23 @@ const profile_input = document.querySelector('#profile_image');
 const extra_div = document.querySelector('.extra-div');
 
 if (extra_div) {
-
     const profile_icon = extra_div.querySelector('i');
     const profile_text = extra_div.querySelector('.picture-text');
     profile_hover();
-
     profile_input.addEventListener('change', function () {
         const file = profile_input.files[0];
+        const reader = new FileReader();
         if (file && file.type.startsWith("image/")) {
             const image_url = URL.createObjectURL(file);
             profile_picture.style.backgroundImage = `url(${image_url})`;
-
             profile_picture.classList.add('profile-image');
             profile_icon.style.display = "none";
             profile_text.style.display = "none";
+            reader.readAsDataURL(file);
+        }
+        reader.onload = function () {
+            console.log("Profile result loaded");
+            profile_img = reader.result;
         }
     })
     function profile_hover() {
@@ -284,7 +312,6 @@ if (extra_div) {
             }
         });
     }
-
     profile_picture.addEventListener('click', function (e) {
         if (profile_picture.classList.contains('profile-image')) {
             e.preventDefault();
@@ -295,8 +322,7 @@ if (extra_div) {
             profile_text.style.display = "block";
             profile_icon.style.display = "block";
             profile_input.value = "";
+            profile_img = "";
         }
     })
-
-
 }
