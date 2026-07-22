@@ -1,18 +1,22 @@
 // google button 
 // localStorage.clear();
+const home_page = "task1_home_crud.html";
+
 const google_button = document.querySelector('.continue-google-button');
 const google_icon = document.createElement('i');
-google_icon.classList.add('fa-brands', 'fa-google', 'me-1');
-const google_img = document.querySelector('.google-img');
+if (google_button) {
+    google_icon.classList.add('fa-brands', 'fa-google', 'me-1');
+    const google_img = document.querySelector('.google-img');
 
-google_button.addEventListener('mouseover', function () {
-    google_img.remove();
-    google_button.prepend(google_icon);
-})
-google_button.addEventListener('mouseleave', function () {
-    google_icon.remove();
-    google_button.prepend(google_img);
-})
+    google_button.addEventListener('mouseover', function () {
+        google_img.remove();
+        google_button.prepend(google_icon);
+    })
+    google_button.addEventListener('mouseleave', function () {
+        google_icon.remove();
+        google_button.prepend(google_img);
+    })
+}
 
 // show/hide password
 
@@ -32,6 +36,7 @@ for (let eye of eye_icon) {
 }
 
 // required fields 
+
 const password = {
     input: document.querySelector('#password'),
     name: "Password",
@@ -88,6 +93,11 @@ const e_checklist_items = [
             if (!end || end.length < 2 || !isNaN(end)) return false;
             return true;
         }
+    },
+    {
+        name: "availability_check", message: "Email already in use", check() {
+            return !users.some(user => (user.email === email.value));
+        }
     }
 ]
 
@@ -142,12 +152,24 @@ function signupCheck(e) {
         return;
     }
     req_msg.textContent = "";
-    console.log('submitted');
+    // console.log('submitted');
     first_name = document.querySelector('#first_name').value;
     last_name = document.querySelector('#last_name').value;
     const new_user = { first_name, last_name, email: email.value, password: password.value, profile_picture: profile_img };
     users.push(new_user);
     save_users(users);
+    const success_icon = document.createElement('i');
+    success_icon.classList.add('fa-solid', 'fa-check', 'me-2');
+    req_msg.textContent = "";
+    req_msg.classList.add('text-success');
+    req_msg.classList.remove('text-danger');
+    req_msg.append(success_icon, `SignUp Successful`);
+    localStorage.setItem(
+        "loggedInUser",
+        JSON.stringify(new_user)
+    );
+    // console.log(localStorage.getItem("loggedInUser"));
+    window.location.href = home_page;
 }
 
 function loginCheck(e) {
@@ -176,31 +198,46 @@ function loginCheck(e) {
         const error_icon = document.createElement('i');
         error_icon.classList.add('fa-solid', 'fa-exclamation', 'me-2');
         req_msg.textContent = "";
-        req_msg.append(error_icon, `Email and Password donot match.`);
         req_msg.classList.remove('text-success');
         req_msg.classList.add('text-danger');
+        req_msg.append(error_icon, `Email and Password donot match.`);
     }
     else {
-        console.log('Login Successful')
-    }
+        const logged_user = users.find(user =>
+            user.email === email.value &&
+            user.password === password.value
+        );
 
+        localStorage.setItem(
+            "loggedInUser",
+            JSON.stringify(logged_user)
+        );
+        const success_icon = document.createElement('i');
+        success_icon.classList.add('fa-solid', 'fa-check', 'me-2');
+        req_msg.textContent = "";
+        req_msg.classList.add('text-success');
+        req_msg.classList.remove('text-danger');
+        req_msg.append(success_icon, `Login Successful`);
+        // console.log('Login Successful')
+        submit_button.disabled = false;
+        window.location.href = home_page;
+    }
 }
 
-
-email.input.addEventListener('input', () => {
-    if (!email.isEmpty() && passChecklist(e_checklist_items)) {
-        removeError(email);
-        email.filled = true;
-        checkAllFieldsFilled();
-    }
-    else {
-        email.filled = false;
-        showError(email);
-    }
-});
-
 if (confirm_password.input) {
-    confirm_password.input.addEventListener('input', () => {
+    email.input.addEventListener('blur', () => {
+        if (!email.isEmpty() && passChecklist(e_checklist_items)) {
+            removeError(email);
+            email.filled = true;
+            checkAllFieldsFilled();
+        }
+        else {
+            email.filled = false;
+            showError(email);
+        }
+    });
+
+    confirm_password.input.addEventListener('blur', () => {
         if (!confirm_password.isEmpty() && passChecklist(cp_checklist_items)) {
             removeError(confirm_password);
             confirm_password.filled = true;
@@ -211,19 +248,19 @@ if (confirm_password.input) {
             showError(confirm_password);
         }
     });
-}
 
-password.input.addEventListener('input', () => {
-    if (!password.isEmpty() && passChecklist(p_checklist_items)) {
-        removeError(password);
-        password.filled = true;
-        checkAllFieldsFilled();
-    }
-    else {
-        password.filled = false;
-        showError(password)
-    }
-});
+    password.input.addEventListener('blur', () => {
+        if (!password.isEmpty() && passChecklist(p_checklist_items)) {
+            removeError(password);
+            password.filled = true;
+            checkAllFieldsFilled();
+        }
+        else {
+            password.filled = false;
+            showError(password)
+        }
+    });
+}
 
 function checkAllFieldsFilled() {
     if (email.filled && password.filled && (!confirm_password.input || confirm_password.filled)) {
@@ -263,7 +300,7 @@ if (cp_checklist) {
         inputChecklist(cp_checklist, cp_checklist_items);
     });
 }
-if (e_checklist){
+if (e_checklist) {
     email.input.addEventListener('change', function () {
         inputChecklist(e_checklist, e_checklist_items);
     })
@@ -291,7 +328,7 @@ if (extra_div) {
             reader.readAsDataURL(file);
         }
         reader.onload = function () {
-            console.log("Profile result loaded");
+            // console.log("Profile result loaded");
             profile_img = reader.result;
         }
     })

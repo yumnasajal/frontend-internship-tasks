@@ -1,3 +1,7 @@
+const loggedUser = localStorage.getItem("loggedInUser");
+if(!loggedUser){
+    window.location.href = "task1_login.html";
+}
 function display_users() {
     const users = get_users();
     console.log(users);
@@ -48,3 +52,9 @@ function display_users() {
     });
 }
 display_users();
+
+const logout_btn = document.querySelector("#logout");
+logout_btn.addEventListener("click",()=>{
+    localStorage.removeItem("loggedInUser");
+    window.location.href="task1_login.html";
+});
