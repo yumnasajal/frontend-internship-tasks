@@ -127,6 +127,7 @@ function removeError(field) {
 
 function signupCheck(e) {
     e.preventDefault();
+    // Good validation effort here. Next step is to pull repeated field checks into a small helper.
     let empty_fields = [];
     if (password.isEmpty() || !passChecklist(p_checklist_items)) {
         empty_fields.push(password);
@@ -153,6 +154,7 @@ function signupCheck(e) {
     }
     req_msg.textContent = "";
     // console.log('submitted');
+    // Declare these with const or let.
     first_name = document.querySelector('#first_name').value;
     last_name = document.querySelector('#last_name').value;
     const new_user = { first_name, last_name, email: email.value, password: password.value, profile_picture: profile_img };
@@ -174,6 +176,7 @@ function signupCheck(e) {
 
 function loginCheck(e) {
     e.preventDefault();
+    // Some of this required-field logic is very similar to signupCheck. Try to reuse the same helper where possible.
     let empty_fields = [];
     if (password.isEmpty()) {
         empty_fields.push(password);
@@ -225,6 +228,7 @@ function loginCheck(e) {
 }
 
 if (confirm_password.input) {
+    // This part is working, but there is repeated blur logic for each field. Try making one reusable validator function.
     email.input.addEventListener('blur', () => {
         if (!email.isEmpty() && passChecklist(e_checklist_items)) {
             removeError(email);
@@ -282,6 +286,7 @@ function passChecklist(checklist) {
 }
 
 function inputChecklist(checklist, checklist_items) {
+    // Good idea. Keeping checklist rendering in one function is the right direction.
     checklist.innerHTML = "";
     for (let item of checklist_items) {
         if (item.check()) { continue };
@@ -315,6 +320,7 @@ const extra_div = document.querySelector('.extra-div');
 if (extra_div) {
     const profile_icon = extra_div.querySelector('i');
     const profile_text = extra_div.querySelector('.picture-text');
+    // Nice feature. One small improvement: also handle the case where the selected file is not an image.
     profile_hover();
     profile_input.addEventListener('change', function () {
         const file = profile_input.files[0];

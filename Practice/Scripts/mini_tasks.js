@@ -47,6 +47,7 @@ check_movies_some(animated_movies);
 // Task 3: Real Average with Validation
 
 function realAvg(nums){
+    // Good logic. Just handle the empty array case as well so it does not break.
     let total = nums.reduce((total, num) => (total + num), 0);
     return total/nums.length;
 }
@@ -119,12 +120,14 @@ printing_list(taskProducts);
 // Task 6: Todo Status Report
 
 function completed_tasks_count(tasks){
+    // This works, but here filter + reduce is doing extra work. filter(...).length would be simpler here.
     return tasks.filter((m => m.done)).reduce((acc, task) => (acc+1),0)
 }
 let completed = completed_tasks_count(taskTodos);
 console.log(`Completed tasks: ${completed}`)
 
 function pending_tasks_count(tasks){
+    // Same here. Try to keep simple cases simple.
     return tasks.filter((m => !(m.done))).reduce((acc, task) => (acc+1),0)
 }
 let pending = pending_tasks_count(taskTodos);
@@ -215,6 +218,7 @@ function generateRandomNumber(max){
 }
 
 function checkGuess(correct_guess, user_guess, max){
+    // Handle all cases in one place. Right now the correct guess case is handled outside this function.
     user_guess = parseInt(user_guess);
     if (isNaN(user_guess) || user_guess < 0 || user_guess > max){
         return `Invalid`;
@@ -257,6 +261,7 @@ add_button.addEventListener("click", () => {
   addName(input_name);
 });
 function addName(name){
+    // Nice start. Next step: trim the name and prevent duplicates before adding to the list.
     if(!name){
         message.textContent = `Please enter your name`;
     }
