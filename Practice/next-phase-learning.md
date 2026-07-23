@@ -50,6 +50,9 @@ The goal now is not just using them. The goal is knowing **when** to use which o
 This is the real next phase.
 
 Focus on:
+- `setTimeout()` vs `setInterval()`
+- callbacks
+- Promises
 - `fetch()`
 - `async/await`
 - `try/catch`
@@ -61,6 +64,9 @@ Also understand:
 - why async code does not run in the same way as normal synchronous code
 - why `await` is easier to read than nested callbacks
 - why `Promise.all` is useful when requests are independent
+- how JavaScript handles async behavior even though it is a single-threaded language
+
+Some of this part is practical and some of it is theory, but both matter.
 
 ### 4. Working with API data
 
@@ -102,6 +108,20 @@ Now improve it in small steps:
 Use the same backend above for this work as well.
 
 Do this step by step. Do not rebuild everything at once.
+
+## Important comparisons to understand
+
+As you move forward, do not only practice topics one by one. Also understand the difference between similar things and why one is used instead of another.
+
+- `setTimeout()` vs `setInterval()`
+- callback vs Promise
+- Promise vs `async/await`
+- synchronous code vs asynchronous code
+- single-threaded JavaScript vs asynchronous behavior
+- `PATCH` vs `POST` vs `PUT`
+- client-side filtering vs backend filtering
+- raw API response vs transformed UI data
+- loading state vs empty state vs error state
 
 ## Suggested direction
 
