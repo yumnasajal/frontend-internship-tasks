@@ -1,4 +1,4 @@
-const loggedUser = localStorage.getItem("loggedInUser");
+const loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
 if(!loggedUser){
     window.location.href = "task1_login.html";
 }

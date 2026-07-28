@@ -124,6 +124,8 @@ function removeError(field) {
     }
     req_msg.textContent = "";
 }
+const first_name = document.querySelector('#first_name').value;
+const last_name = document.querySelector('#last_name').value;
 
 function signupCheck(e) {
     e.preventDefault();
@@ -153,8 +155,6 @@ function signupCheck(e) {
     }
     req_msg.textContent = "";
     // console.log('submitted');
-    first_name = document.querySelector('#first_name').value;
-    last_name = document.querySelector('#last_name').value;
     const new_user = { first_name, last_name, email: email.value, password: password.value, profile_picture: profile_img };
     users.push(new_user);
     save_users(users);

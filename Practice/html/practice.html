@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <style type="text/tailwindcss">
+        @theme {
+        }
+        nav {
+            color: #b1c9aa;
+        }
+        body {
+            background-color: #f9f8f8;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="bg-teal-950 p-4 shadow-md w-full">
+        <div class="mx-auto flex justify-between items-center flex-col gap-2 sm:flex-row">
+            <div class="flex gap-2">
+                <img class="h-9" src="Assets/letter-n-icon-png-1.png" alt="NavBar-logo">
+                <a class="text-teal-200 text-2xl font-bold">
+                    MuseumOfCandy</a>
+            </div>
+
+            <ul class="flex gap-6 text-white">
+                <li><a class="hover:underline" href="#">Home</a></li>
+                <li><a class="hover:underline" href="#">Products</a></li>
+                <li><a class="hover:underline" href="#">About</a></li>
+            </ul>
+
+            <div>
+                <button
+                    class="bg-teal-950 py-1.5 px-5 border-2 rounded-md text-teal-100 font-semibold  border-teal-100 hover:bg-teal-100 hover:text-teal-950">Logout</button>
+            </div>
+        </div>
+    </nav>
+    <main class=" flex flex-row items-start justify-between gap-2 p-5">
+        <div class="search-movies p-1 flex flex-col lg:flex-row gap-5 lg:gap-10">
+            <h1 class="text-4xl flex-1 font-semibold">Search your favourite movies</h1>
+            <form class="mt-1 flex-shrink-0" action="" id="search-form">
+                <input type="text" placeholder="TV show title" name="query"
+                    class="p-2 border-1 rounded-md shadow-md border-teal-950">
+                <button
+                    class="bg-teal-950 text-white p-2 border-1 border-teal-950 rounded-md shadow-md hover:bg-teal-50 hover:text-teal-950">Search</button>
+            </form>
+        </div>
+
+        <div class="bg-teal-50 w-80 py-3 px-2 rounded-md shadow-md border-[0.5px] border-gray-200">
+            <div class="flex flex-col lg:flex-row gap-2 justify-between p-1">
+                <h2 class="font-bold mt-1"> Click to get dad jokes</h2>
+                <button id="dad_joke_btn"
+                    class="ms-2 mb-2 py-1 px-5 border-2 rounded-md text-teal-950 font-semibold  border-teal-950 hover:bg-teal-950 hover:text-teal-100">Dad
+                    joke</button>
+            </div>
+            <p id="dad_joke_p" class="text-black"></p>
+        </div>
+    </main>
+    <section id="movie-images" class="m-2 p-2 flex flex-wrap justify-center gap-2">
+
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
+    <!-- <script src="../Scripts/async.js"></script> -->
+    <script src="../Scripts/ajax.js"></script>
+</body>
+
+</html>
