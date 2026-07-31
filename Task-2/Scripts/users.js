@@ -5,6 +5,7 @@ if(!loggedUser){
 function display_users() {
     const users = get_users();
     console.log(users);
+    // Good rendering practice. Next step: break row creation into a separate function when this table grows more.
     const table_body = document.querySelector('#user_table');
     table_body.innerHTML = "";
     let number = 1;
