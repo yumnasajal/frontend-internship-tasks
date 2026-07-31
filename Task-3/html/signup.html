@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp-Permify</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Yuyu&display=swap"
+        rel="stylesheet">
+    <style type="text/tailwindcss">
+        @theme {
+            --font-comfortaa: "Comfortaa", sans-serif;
+            --color-mutedteal: #005A60;
+            --font-yuyu: "Yuyu", sans-serif;
+        }
+        @layer utilities {
+            .text-shadow-pink {
+                text-shadow: 0 2px 5px rgba(157, 23, 77, 0.71);
+            }
+        }
+        @layer components{
+            .input-heading {
+                @apply self-start ms-2 mt-1;
+            }
+            .input-div {
+                @apply flex flex-row items-center border border-gray-200 shadow-md h-10 rounded-lg bg-white/50;
+            }
+            .input-icon {
+                @apply text-gray-700 m-3;
+            }
+            .input {
+                @apply outline-none w-full pe-2;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-[url('../assets/johny-goerend-Oz2ZQ2j8We8-unsplash.jpg')] bg-cover bg-center bg-fixed">
+    <main class="bg-black/30 flex items-center justify-center">
+        <section
+            class="w-100 sm:w-3/4 lg:w-1/2 border-1 border-teal-500 rounded-xl shadow-xl bg-white/80 flex flex-col justify-center text-center items-center gap-1 p-6 my-8">
+
+            <!-- Permify heading -->
+            <div class="flex flex-row items-center">
+                <img src="../Assets/127756-alphabet-neon-free-download-image.png" alt="Permify logo" class="w-10 h-10">
+                <h3 class="text-4xl text-mutedteal"><span class="font-bold">P</span><span
+                        class="font-comfortaa text-2xl text-shadow-pink">ermify</span></h3>
+            </div>
+
+            <h2 class="text-shadow-pink font-bold text-3xl">Create Account</h2>
+            <p class="font-yuyu font-medium text-teal-900 text-2xl">Join us to get started</p>
+
+            <form action="" class="w-full max-w-3xl px-4 flex flex-col gap-1" id="signup-form" novalidate>
+
+                <!-- profile picture -->
+                <div
+                    class="group rounded-full overflow-hidden w-20 h-20 self-center relative flex justify-center bg-white/50 shadow-md hover:border hover:border-mutedteal hover:scale-101">
+                    <img src="../assets/avatar-default-user-profile-icon-simple-flat-grey-vector-57234191.jpg" alt="">
+                    <div
+                        class="group-hover:opacity-100 opacity-70 transition bg-black absolute inset-0 flex items-center justify-center text-center">
+                        <label for="profile_image" class="text-white text-sm group-hover:underline">Add your
+                            avatar</label>
+
+                    </div>
+                </div>
+                <input type="file" id="profile_image" accept="image/*" hidden>
+
+                <!-- name -->
+                <div class="flex flex-col w-full md:flex-row md:gap-2 ">
+
+                    <!-- first name -->
+                    <div class="flex flex-col flex-1">
+                        <p class="input-heading">First name</p>
+                        <div class="hover:border-mutedteal input-div">
+                            <i class="fa-regular fa-user input-icon"></i>
+                            <input type="text" placeholder="First Name" id="first_name" class="input">
+                        </div>
+                    </div>
+
+                    <!-- last name -->
+                    <div class="flex flex-col flex-1">
+                        <p class="input-heading">Last name</p>
+                        <div class="hover:border-mutedteal input-div">
+                            <i class="fa-regular fa-user input-icon"></i>
+                            <input type="text" placeholder="Last Name" id="last_name" class="input">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- email address -->
+                <p class="input-heading">Email Address <span class="text-pink-800">*</span></p>
+                <div class="hover:border-mutedteal input-div">
+                    <i class="fa-regular fa-envelope input-icon"></i>
+                    <input type="email" placeholder="Email Address" class="input" name="Email" id="email">
+                </div>
+
+                <!-- username -->
+                <p class="input-heading">Username <span class="text-pink-800">*</span></p>
+                <div class="hover:border-mutedteal input-div">
+                    <i class="fa-regular fa-address-book input-icon"></i>
+                    <input type="text" placeholder="Username" class="input" name="Username" id="username">
+                </div>
+
+                <!-- password  -->
+                <p class="input-heading">Password <span class="text-pink-800">*</span></p>
+                <div class="input-div hover:border-mutedteal">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <input type="password" placeholder="Password" class="input" id="password">
+                    <button type="button">
+                        <i
+                            class="eye-icon fa-regular fa-eye-slash input-icon  hover:text-pink-800 hover:cursor-pointer"></i>
+                    </button>
+                </div>
+
+                <!-- Confirm password  -->
+                <p class="input-heading">Confirm Passowrd <span class="text-pink-800">*</span></p>
+                <div class="input-div hover:border-mutedteal">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <input type="password" placeholder="Confirm Password" class="input" id="confirm_password">
+                    <button type="button">
+                        <i
+                            class="eye-icon fa-regular fa-eye-slash input-icon  hover:text-pink-800 hover:cursor-pointer"></i>
+                    </button>
+                </div>
+
+                <p class="input-heading">Select a role</p>
+                <div class="input-div hover:border-mutedteal">
+                    <i class="fa-solid fa-user-shield input-icon"></i>
+                    <select name="Role" id="role" class="w-full outline-none bg-transparent me-3">
+                        <option value="user" selected>
+                            User
+                        </option>
+                        <option value="moderator">
+                            Moderator
+                        </option>
+                        <option value="admin">
+                            Admin
+                        </option>
+                    </select>
+                </div>
+
+                <!-- terms and conditions checkbox -->
+                <div class="self-start flex flex-row items-center gap-1 ms-1">
+                    <input type="checkbox" class="accent-pink-800 w-4 h-4" id="check-box">
+                    <label for="checkbox1">I agree to the <span class="text-pink-800 hover:underline"><a href="">Terms & Privacy Policy</a></span></label>
+                </div>
+
+                <!-- signup button -->
+                <button type="submit"
+                    class="mt-3 h-9 rounded-lg text-white bg-gradient-to-r from-pink-800 to-mutedteal hover:from-mutedteal hover:to-pink-800 transition duration-300 ease-in-out shadow-md hover:shadow-lg w-full hover:scale-101"
+                    id="submit_button">SignUp</button>
+                <p id="required_msg" class="text-pink-800 text-md self-start"></p>
+
+                <!-- Or continue with -->
+                <div class="flex flex-row items-center w-full gap-2 mt-2">
+                    <div class="h-px flex-1 bg-gray-400"></div>
+                    <p class="text-gray-800 text-md">Or continue with</p>
+                    <div class="h-px flex-1 bg-gray-400"></div>
+                </div>
+
+                <!-- buttons -->
+                <div class="w-full flex gap-3 mt-2">
+                    <button id="google-button"
+                        class="hover:shadow-lg hover:scale-101 group shadow-md h-9 bg-white/50 rounded-lg flex items-center justify-center flex-1 hover:bg-gradient-to-r hover:from-red-500 hover:via-yellow-800 hover:to-green-700 transition"
+                        type="button">
+                        <img class="h-7 w-7" id="google-img" src="../Assets/google_logo_g_logo_icon_159348.webp"
+                            alt="Google logo">
+                        <p class="group-hover:text-white">Google</p>
+                    </button>
+                    <button
+                        class="hover:shadow-lg hover:scale-101 group transition hover:bg-black shadow-md h-9 bg-white/50 rounded-lg flex gap-1 items-center justify-center flex-1"
+                        type="button">
+                        <i class="fa-brands fa-github group-hover:text-white"></i>
+                        <p class="group-hover:text-white">Github</p>
+                    </button>
+                </div>
+
+                <!-- already have an account -->
+                <div class="mt-2">
+                    <p>Already have an account? <span class="ps-1 text-pink-800 hover:underline"><a href="login.html"
+                                target="_blank">Login</a></span></p>
+                </div>
+            </form>
+        </section>
+    </main>
+    <script src="../Scripts/authentication.js"></script>
+</body>
+
+</html>
