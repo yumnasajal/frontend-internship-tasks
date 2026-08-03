@@ -86,7 +86,8 @@ const p_checklist_items = [
 
 const e_checklist_items = [
     {
-        name: "validity_check", message: "Email not valid", check() {
+        name: "validity_check", message: "Email not valid",
+        check() {
             const parts = email.value.split('@');
             if (parts.length !== 2 || !parts.every(part => part) || !parts[1].includes('.')) return false;
             const end = email.value.split('.').pop();
@@ -124,22 +125,25 @@ function removeError(field) {
     }
     req_msg.textContent = "";
 }
-const first_name = document.querySelector('#first_name').value;
-const last_name = document.querySelector('#last_name').value;
+
+function validate_fields(field, checklist = null) {
+    if (field.isEmpty()) {
+        return [field];
+    }
+    if (checklist && !passChecklist(checklist)) {
+        return [field];
+    }
+    return [];
+}
 
 function signupCheck(e) {
     e.preventDefault();
     // Good validation effort here. Next step is to pull repeated field checks into a small helper.
+    // done
     let empty_fields = [];
-    if (password.isEmpty() || !passChecklist(p_checklist_items)) {
-        empty_fields.push(password);
-    }
-    if (email.isEmpty() || !passChecklist(e_checklist_items)) {
-        empty_fields.push(email);
-    }
-    if (confirm_password.input && (confirm_password.isEmpty() || !passChecklist(cp_checklist_items))) {
-        empty_fields.push(confirm_password);
-    }
+    empty_fields.push(...validate_fields(password, p_checklist_items));
+    empty_fields.push(...validate_fields(email, e_checklist_items));
+    if (confirm_password.input) empty_fields.push(...validate_fields(confirm_password, cp_checklist_items));
     if (empty_fields.length > 0) {
         empty_fields.forEach(field => {
             showError(field);
@@ -157,35 +161,22 @@ function signupCheck(e) {
     req_msg.textContent = "";
     // console.log('submitted');
     // Declare these with const or let.
-    first_name = document.querySelector('#first_name').value;
-    last_name = document.querySelector('#last_name').value;
+    // done
+    const first_name = document.querySelector('#first_name').value;
+    const last_name = document.querySelector('#last_name').value;
     const new_user = { first_name, last_name, email: email.value, password: password.value, profile_picture: profile_img };
     users.push(new_user);
     save_users(users);
-    const success_icon = document.createElement('i');
-    success_icon.classList.add('fa-solid', 'fa-check', 'me-2');
-    req_msg.textContent = "";
-    req_msg.classList.add('text-success');
-    req_msg.classList.remove('text-danger');
-    req_msg.append(success_icon, `SignUp Successful`);
-    localStorage.setItem(
-        "loggedInUser",
-        JSON.stringify(new_user)
-    );
-    // console.log(localStorage.getItem("loggedInUser"));
-    window.location.href = home_page;
+    successful_submit(`Signup`, new_user)
 }
 
 function loginCheck(e) {
     e.preventDefault();
     // Some of this required-field logic is very similar to signupCheck. Try to reuse the same helper where possible.
+    // done
     let empty_fields = [];
-    if (password.isEmpty()) {
-        empty_fields.push(password);
-    }
-    if (email.isEmpty()) {
-        empty_fields.push(email);
-    }
+    empty_fields.push(...validate_fields(password));
+    empty_fields.push(...validate_fields(email));
     if (empty_fields.length > 0) {
         empty_fields.forEach(field => { showError(field); });
         let message = empty_fields.map(field => field.name).join(", ");
@@ -212,60 +203,43 @@ function loginCheck(e) {
             user.email === email.value &&
             user.password === password.value
         );
-
-        localStorage.setItem(
-            "loggedInUser",
-            JSON.stringify(logged_user)
-        );
-        const success_icon = document.createElement('i');
-        success_icon.classList.add('fa-solid', 'fa-check', 'me-2');
-        req_msg.textContent = "";
-        req_msg.classList.add('text-success');
-        req_msg.classList.remove('text-danger');
-        req_msg.append(success_icon, `Login Successful`);
-        // console.log('Login Successful')
-        submit_button.disabled = false;
-        window.location.href = home_page;
+        successful_submit(`Login`, logged_user);
     }
 }
 
+function successful_submit(event_name, logged_user) {
+    const success_icon = document.createElement('i');
+    success_icon.classList.add('fa-solid', 'fa-check', 'me-2');
+    req_msg.textContent = "";
+    req_msg.classList.add('text-success');
+    req_msg.classList.remove('text-danger');
+    req_msg.append(success_icon, `${event_name} Successful`);
+    // console.log(`${event_name} Successful`)
+    submit_button.disabled = false;
+    window.location.href = home_page;
+    localStorage.setItem("loggedInUser", JSON.stringify(logged_user));
+}
+
+function add_blur(field, checklist) {
+    field.input.addEventListener('blur', () => {
+        if (!field.isEmpty() && passChecklist(checklist)) {
+            removeError(field);
+            field.filled = true;
+            checkAllFieldsFilled();
+        }
+        else {
+            field.filled = false;
+            showError(field);
+        }
+    })
+}
 if (confirm_password.input) {
     // This part is working, but there is repeated blur logic for each field. Try making one reusable validator function.
-    email.input.addEventListener('blur', () => {
-        if (!email.isEmpty() && passChecklist(e_checklist_items)) {
-            removeError(email);
-            email.filled = true;
-            checkAllFieldsFilled();
-        }
-        else {
-            email.filled = false;
-            showError(email);
-        }
-    });
+    // done
+    add_blur(email, e_checklist_items);
+    add_blur(confirm_password, cp_checklist_items);
+    add_blur(password, p_checklist_items);
 
-    confirm_password.input.addEventListener('blur', () => {
-        if (!confirm_password.isEmpty() && passChecklist(cp_checklist_items)) {
-            removeError(confirm_password);
-            confirm_password.filled = true;
-            checkAllFieldsFilled();
-        }
-        else {
-            confirm_password.filled = false;
-            showError(confirm_password);
-        }
-    });
-
-    password.input.addEventListener('blur', () => {
-        if (!password.isEmpty() && passChecklist(p_checklist_items)) {
-            removeError(password);
-            password.filled = true;
-            checkAllFieldsFilled();
-        }
-        else {
-            password.filled = false;
-            showError(password)
-        }
-    });
 }
 
 function checkAllFieldsFilled() {
@@ -323,8 +297,13 @@ if (extra_div) {
     const profile_icon = extra_div.querySelector('i');
     const profile_text = extra_div.querySelector('.picture-text');
     // Nice feature. One small improvement: also handle the case where the selected file is not an image.
+    // done 
     profile_hover();
     profile_input.addEventListener('change', function () {
+        if (!file.type.startsWith("image")) {
+            alert("Please upload an image");
+            return;
+        }
         const file = profile_input.files[0];
         const reader = new FileReader();
         if (file && file.type.startsWith("image/")) {
@@ -345,7 +324,7 @@ if (extra_div) {
             if (profile_picture.classList.contains('profile-image')) {
                 profile_icon.style.display = "block";
                 profile_text.textContent = "Remove Avatar"
-                profile_text.classList.add('px-2')
+                profile_text.classList.add('px-2');
                 profile_text.style.display = "block";
                 profile_picture.classList.remove('hover-class');
             }

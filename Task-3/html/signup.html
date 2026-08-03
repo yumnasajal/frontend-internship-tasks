@@ -59,17 +59,18 @@
             <form action="" class="w-full max-w-3xl px-4 flex flex-col gap-1" id="signup-form" novalidate>
 
                 <!-- profile picture -->
-                <div
+                <div id="avatar-div"
                     class="group rounded-full overflow-hidden w-20 h-20 self-center relative flex justify-center bg-white/50 shadow-md hover:border hover:border-mutedteal hover:scale-101">
-                    <img src="../assets/avatar-default-user-profile-icon-simple-flat-grey-vector-57234191.jpg" alt="">
-                    <div
-                        class="group-hover:opacity-100 opacity-70 transition bg-black absolute inset-0 flex items-center justify-center text-center">
-                        <label for="profile_image" class="text-white text-sm group-hover:underline">Add your
-                            avatar</label>
-
+                    <img src="" alt="">
+                    <div 
+                    class="group-hover:opacity-80 opacity-70 transition bg-black absolute inset-0 flex items-center justify-center text-center" id="overlay-avatar">
+                    <label for="avatar" class="text-white text-sm group-hover:underline">Add your
+                        avatar</label>
+                        
                     </div>
                 </div>
-                <input type="file" id="profile_image" accept="image/*" hidden>
+                <p id="avatar-error" class="text-pink-800 text-md self-between"></p>
+                <input type="file" id="avatar" accept="image/*" hidden>
 
                 <!-- name -->
                 <div class="flex flex-col w-full md:flex-row md:gap-2 ">
@@ -79,7 +80,7 @@
                         <p class="input-heading">First name</p>
                         <div class="hover:border-mutedteal input-div">
                             <i class="fa-regular fa-user input-icon"></i>
-                            <input type="text" placeholder="First Name" id="first_name" class="input">
+                            <input type="text" placeholder="First Name" id="first-name" class="input">
                         </div>
                     </div>
 
@@ -88,7 +89,7 @@
                         <p class="input-heading">Last name</p>
                         <div class="hover:border-mutedteal input-div">
                             <i class="fa-regular fa-user input-icon"></i>
-                            <input type="text" placeholder="Last Name" id="last_name" class="input">
+                            <input type="text" placeholder="Last Name" id="last-name" class="input">
                         </div>
                     </div>
                 </div>
@@ -99,14 +100,16 @@
                     <i class="fa-regular fa-envelope input-icon"></i>
                     <input type="email" placeholder="Email Address" class="input" name="Email" id="email">
                 </div>
-
+                <p id="email-error" class="text-pink-800 text-md self-start"></p>
+                
                 <!-- username -->
                 <p class="input-heading">Username <span class="text-pink-800">*</span></p>
                 <div class="hover:border-mutedteal input-div">
                     <i class="fa-regular fa-address-book input-icon"></i>
                     <input type="text" placeholder="Username" class="input" name="Username" id="username">
                 </div>
-
+                <p id="username-error" class="text-pink-800 text-md self-start"></p>
+                
                 <!-- password  -->
                 <p class="input-heading">Password <span class="text-pink-800">*</span></p>
                 <div class="input-div hover:border-mutedteal">
@@ -114,25 +117,27 @@
                     <input type="password" placeholder="Password" class="input" id="password">
                     <button type="button">
                         <i
-                            class="eye-icon fa-regular fa-eye-slash input-icon  hover:text-pink-800 hover:cursor-pointer"></i>
+                        class="eye-icon fa-regular fa-eye-slash input-icon  hover:text-pink-800 hover:cursor-pointer"></i>
                     </button>
                 </div>
-
+                <p id="password-error" class="text-pink-800 text-md self-start"></p>
+                
                 <!-- Confirm password  -->
                 <p class="input-heading">Confirm Passowrd <span class="text-pink-800">*</span></p>
                 <div class="input-div hover:border-mutedteal">
                     <i class="fa-solid fa-lock input-icon"></i>
-                    <input type="password" placeholder="Confirm Password" class="input" id="confirm_password">
+                    <input type="password" placeholder="Confirm Password" class="input" id="confirm-password">
                     <button type="button">
                         <i
-                            class="eye-icon fa-regular fa-eye-slash input-icon  hover:text-pink-800 hover:cursor-pointer"></i>
+                        class="eye-icon fa-regular fa-eye-slash input-icon hover:text-pink-800 hover:cursor-pointer"></i>
                     </button>
                 </div>
-
+                <p id="confirm-password-error" class="text-pink-800 text-md self-start"></p>
+                
                 <p class="input-heading">Select a role</p>
                 <div class="input-div hover:border-mutedteal">
                     <i class="fa-solid fa-user-shield input-icon"></i>
-                    <select name="Role" id="role" class="w-full outline-none bg-transparent me-3">
+                    <select name="Role" id="role" class="w-full outline-none bg-transparent me-3" id="role">
                         <option value="user" selected>
                             User
                         </option>
@@ -154,8 +159,8 @@
                 <!-- signup button -->
                 <button type="submit"
                     class="mt-3 h-9 rounded-lg text-white bg-gradient-to-r from-pink-800 to-mutedteal hover:from-mutedteal hover:to-pink-800 transition duration-300 ease-in-out shadow-md hover:shadow-lg w-full hover:scale-101"
-                    id="submit_button">SignUp</button>
-                <p id="required_msg" class="text-pink-800 text-md self-start"></p>
+                    id="submit-button">SignUp</button>
+                <p id="required-msg" class="text-pink-800 text-md self-start"></p>
 
                 <!-- Or continue with -->
                 <div class="flex flex-row items-center w-full gap-2 mt-2">
@@ -189,6 +194,7 @@
             </form>
         </section>
     </main>
+    <script src="../scripts/api.js"></script>
     <script src="../Scripts/authentication.js"></script>
 </body>
 

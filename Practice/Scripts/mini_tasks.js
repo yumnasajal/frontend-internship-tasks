@@ -4,7 +4,7 @@ console.log("Mini tasks connected");
 
 function getFirstName() {
     let first_name = prompt("Enter first name: ");
-    while (!first_name){
+    while (!first_name) {
         first_name = prompt("Please enter your first name: ");
     }
     console.log(`Hello, ${first_name}`)
@@ -15,11 +15,11 @@ getFirstName();
 // Task 2: Movie Year Check
 
 // case1 
-function check_movies_every(movies){
-    if (movies.every(movie => (movie.year_of_release >= 2000))){
+function check_movies_every(movies) {
+    if (movies.every(movie => (movie.year_of_release >= 2000))) {
         console.log("All movies are new");
     }
-    else if (movies.every(movie => (movie.year_of_release < 2000))){
+    else if (movies.every(movie => (movie.year_of_release < 2000))) {
         console.log("All movies are old")
     }
     else {
@@ -29,9 +29,9 @@ function check_movies_every(movies){
 check_movies_every(animated_movies);
 
 // case 2
-function check_movies_some(movies){
-    if (movies.some(movie=>(movie.year_of_release >= 2000))){
-        if (!movies.some(movie => movie.year_of_release < 2000)){
+function check_movies_some(movies) {
+    if (movies.some(movie => (movie.year_of_release >= 2000))) {
+        if (!movies.some(movie => movie.year_of_release < 2000)) {
             console.log("All movies are new")
         }
         else {
@@ -46,10 +46,14 @@ check_movies_some(animated_movies);
 
 // Task 3: Real Average with Validation
 
-function realAvg(nums){
+function realAvg(nums) {
     // Good logic. Just handle the empty array case as well so it does not break.
+    // done
+    if (nums.length == 0) {
+        return 0;
+    }
     let total = nums.reduce((total, num) => (total + num), 0);
-    return total/nums.length;
+    return total / nums.length;
 }
 let averg = realAvg(taskNumbers);
 console.log(`Real average is ${averg}`)
@@ -57,53 +61,53 @@ console.log(`Real average is ${averg}`)
 
 // Task 4: Student Report
 
-function high_acheiver_studets(students){
-    return students.filter(m => m.score >80).map(m => m.name);
+function high_acheiver_studets(students) {
+    return students.filter(m => m.score > 80).map(m => m.name);
 }
 let high_acheiver_st = high_acheiver_studets(taskStudents);
 console.log(`High acheiver students are ${high_acheiver_st}`)
 
-function students_filter_city(students, city){
+function students_filter_city(students, city) {
     return students.filter(m => m.city === city).map(m => m.name);
 }
 let karachi_students = students_filter_city(taskStudents, "Karachi");
 console.log(`Students from Karachi: ${karachi_students}`)
 
-function avg_score(students){
+function avg_score(students) {
     let total = students.reduce((total, student) => (total + student.score), 0);
-    return total/students.length;
+    return total / students.length;
 }
 let avg_st_score = avg_score(taskStudents);
 console.log(`Average score of students are ${avg_st_score}`)
 
-function topper_student(students){
+function topper_student(students) {
     return students.reduce((max, student) => {
-        return (student.score > max.score) ? student: max;
+        return (student.score > max.score) ? student : max;
     })
 }
-let topper =topper_student(taskStudents);
+let topper = topper_student(taskStudents);
 console.log(`The topper student is ${topper.name}`)
 
 // Task 5: Product Summary
 
-function inStockProducts(products){
+function inStockProducts(products) {
     return products.filter(p => p.inStock).map(p => p.name);
 }
 let in_stock = inStockProducts(taskProducts);
 console.log(`The Products that are in stock are: ${in_stock}`)
 
-function filter_product_category(products, category){
+function filter_product_category(products, category) {
     return products.filter(p => p.category === category).map(p => p.name);
 }
 let study_products = filter_product_category(taskProducts, "study")
 console.log(`The products in study category are ${study_products}`)
 
 function totalPrice(products) {
-    return products.reduce((total, product) => (total + product.price) , 0)
+    return products.reduce((total, product) => (total + product.price), 0)
 }
 
-function mostExpensive(products){
-    let exp_product =  products.reduce((exp, pr) => {
+function mostExpensive(products) {
+    let exp_product = products.reduce((exp, pr) => {
         return (pr.price > exp.price) ? pr : exp;
     })
     return exp_product.name;
@@ -111,7 +115,7 @@ function mostExpensive(products){
 let exp_product = mostExpensive(taskProducts);
 console.log(`The most expensive product is ${exp_product}`);
 
-function printing_list(products){
+function printing_list(products) {
     products.forEach(m => console.log(`${m.name}: Rs.${m.price}`))
 }
 console.log(`The product list is:`);
@@ -119,31 +123,33 @@ printing_list(taskProducts);
 
 // Task 6: Todo Status Report
 
-function completed_tasks_count(tasks){
+function completed_tasks_count(tasks) {
     // This works, but here filter + reduce is doing extra work. filter(...).length would be simpler here.
-    return tasks.filter((m => m.done)).reduce((acc, task) => (acc+1),0)
+    // done
+    return tasks.filter((m => m.done)).length;
 }
 let completed = completed_tasks_count(taskTodos);
 console.log(`Completed tasks: ${completed}`)
 
-function pending_tasks_count(tasks){
+function pending_tasks_count(tasks) {
     // Same here. Try to keep simple cases simple.
-    return tasks.filter((m => !(m.done))).reduce((acc, task) => (acc+1),0)
+    // done
+    return tasks.filter((m => !(m.done))).length;
 }
 let pending = pending_tasks_count(taskTodos);
 console.log(`Pending tasks: ${pending}`)
 
-function todo_list(tasks){
+function todo_list(tasks) {
     return tasks.map(m => m.title);
 }
 let list = todo_list(taskTodos);
 console.log(`The todo list is: ${list}`)
 
-function check_task_status(tasks){
-    if(tasks.every(m => m.done)){
+function check_task_status(tasks) {
+    if (tasks.every(m => m.done)) {
         console.log("All tasks completed.")
     }
-    else if (tasks.every(m => !(m.done))){
+    else if (tasks.every(m => !(m.done))) {
         console.log("All tasks pending")
     }
     else {
@@ -154,32 +160,32 @@ check_task_status(taskTodos);
 
 // Task 7: Number Analyzer
 
-function even_nums(nums){
+function even_nums(nums) {
     return nums.filter(num => num % 2 === 0);
 }
 console.log(`Even numbers are ${even_nums(taskNumbers)}`)
 
-function odd_nums(nums){
+function odd_nums(nums) {
     return nums.filter(num => num % 2 !== 0);
 }
 console.log(`Odd numbers are ${odd_nums(taskNumbers)}`)
 
-function nums_greater_than(nums, number){
+function nums_greater_than(nums, number) {
     return nums.filter(num => num > number);
 }
 console.log(`Numbers greater than 15 are ${nums_greater_than(taskNumbers, 15)}`)
 
-function smallest_num(nums){
+function smallest_num(nums) {
     return nums.reduce((min, num) => (num < min ? num : min))
 }
 console.log(`The smallest number is ${smallest_num(taskNumbers)}`)
 
-function biggest_num(nums){
+function biggest_num(nums) {
     return nums.reduce((max, num) => (num > max ? num : max))
 }
 console.log(`The biggest number is ${biggest_num(taskNumbers)}`)
 
-function check_num(num){
+function check_num(num) {
     if (num < 10) {
         return `small`;
     }
@@ -190,15 +196,15 @@ function check_num(num){
         return `large`;
     }
 }
-function check_num_list(nums){
+function check_num_list(nums) {
     nums.forEach(n => console.log(`${n} is ${check_num(n)}`))
 }
 check_num_list(taskNumbers);
 
 // Task 8: Closure Counter
 
-function createCounter(start){
-    return function(){
+function createCounter(start) {
+    return function () {
         start++;
         return start;
     }
@@ -213,37 +219,43 @@ console.log(start0())
 
 // Task 9: Small Guess Game Logic
 
-function generateRandomNumber(max){
+function generateRandomNumber(max) {
     return Math.floor(Math.random() * (max + 1));
 }
 
-function checkGuess(correct_guess, user_guess, max){
+function checkGuess(correct_guess, user_guess, max) {
     // Handle all cases in one place. Right now the correct guess case is handled outside this function.
+    // done
     user_guess = parseInt(user_guess);
-    if (isNaN(user_guess) || user_guess < 0 || user_guess > max){
+    if (isNaN(user_guess) || user_guess < 0 || user_guess > max) {
         return `Invalid`;
     }
-    else if (user_guess > correct_guess){
+    if (user_guess === correct_guess) {
+        return "Correct";
+    }
+    if (user_guess > correct_guess) {
         return `Too high`;
     }
-    else if (user_guess < correct_guess){
-        return `Too low`;
-    }
+    return `Too low`;
 }
 
-function playGuessRound(){
+function playGuessRound() {
     let max = parseInt(prompt("Enter max number: "));
-    if ((isNaN(max))){
+    if ((isNaN(max)) || max <= 0) {
         max = 50;
     }
     let correct_guess = generateRandomNumber(max);
     let user_guess = parseInt(prompt(`Guess a number from 0 to ${max}`));
     let count = 0;
-    while (user_guess !== correct_guess) {
+    while (true) {
         count++;
-        user_guess = parseInt(prompt(`${checkGuess(correct_guess, user_guess, max)}`));
+        let result = checkGuess(correct_guess, user_guess, max);
+        if (result === "Correct") {
+            console.log(`Wohooo you guessed the correct number in just ${count} turns :)`);
+            break;
+        }
+        user_guess = parseInt(prompt(result));
     }
-    console.log(`Wohooo you guessed the correct number in just ${count} turns :)`)
 }
 
 // playGuessRound();
@@ -257,19 +269,25 @@ const name_list = document.querySelector('#name_list');
 let input_name = name_input.value;
 
 add_button.addEventListener("click", () => {
-  let input_name = name_input.value;
-  addName(input_name);
+    let input_name = name_input.value;
+    addName(input_name);
 });
-function addName(name){
+const names = [];
+function addName(name) {
     // Nice start. Next step: trim the name and prevent duplicates before adding to the list.
-    if(!name){
+    // done
+    name = name.trim();
+    if (!name) {
         message.textContent = `Please enter your name`;
+        return;
     }
-    else {
-        message.textContent = `Hello ${name}`;
-        const li = document.createElement('li');
-        li.textContent = name;
-        name_list.appendChild(li);
-        name_input.value = '';
+    if (names.includes(name)) {
+        message.textContent = `${name} already exists`;
+        return;
     }
+    names.push(name);
+    const li = document.createElement('li');
+    li.textContent = name;
+    name_list.appendChild(li);
+    name_input.value = '';
 }

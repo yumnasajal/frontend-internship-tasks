@@ -45,9 +45,10 @@
                 <li><a class="hover:font-bold" href="#">Products</a></li>
                 <li><a class="hover:font-bold" href="#">About</a></li>
             </ul>
-            <div>
+            <div class="flex flex-row gap-2 items-between justify-center">
                 <button
-                    class="bg-transparent py-1.5 px-5 border-1 rounded-md text-mutedteal font-semibold border-mutedteal hover:bg-mutedteal/60 hover:scale-105 hover:text-teal-950">Logout</button>
+                    class="bg-transparent py-1 px-5 border-1 rounded-md text-mutedteal font-semibold border-mutedteal hover:bg-mutedteal/90 hover:scale-105 hover:text-white">Logout</button>
+                    <button class="bg-black rounded-full overflow-hidden flex items-center justify-center hover:shadow-md hover:scale-105 w-9 border-2 border-mutedteal h-9 shadow-md hover:shadow-lg"><img src="../assets/luthfi-alfarizi-gEf9bOMTZtk-unsplash.webp" alt="" class="object-cover" id="avatar"></button>
             </div>
         </div>
     </nav>
@@ -61,11 +62,12 @@
         <section class="flex flex-col justify-center items-center bg-gray-100 w-full px-20 py-10 gap-4">
             <form action="" class="self-end">
                 <input type="text" placeholder="Search" class="p-2 border-1 rounded-md shadow-md border-pink-800">
-                <button type="submit" class="bg-pink-800 text-white p-2 border-1 border-pink-800 rounded-md shadow-md hover:bg-pink/30 hover:text-pink-800 hover:shadow-lg hover:scale-105"><i class="fa-solid fa-search mx-1"></i></button>
+                <button type="submit" class="bg-pink-800 text-white p-2 border-1 border-pink-800 rounded-md shadow-md hover:bg-pink/30 hover:shadow-lg hover:scale-105"><i class="fa-solid fa-search mx-1"></i></button>
             </form>
             <div class="border rounded-md border-gray-400 w-full overflow-hidden">
                 <table class="w-full">
                 <thead class="bg-mutedteal text-white">
+                    <th class="border border-gray-300 py-2 text-center">ID</th>
                     <th class="border border-gray-300 py-2 text-center">Username</th>
                     <th class="border border-gray-300 py-2 text-center">Email</th>
                     <th class="border border-gray-300 py-2 text-center">Role</th>
@@ -87,6 +89,8 @@
         </section>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
+    <script src="../scripts/api.js"></script>
+    <script src="../scripts/home.js"></script>
 </body>
 
 </html>
