@@ -35,7 +35,7 @@
                 @apply text-gray-700 m-3;
             }
             .input {
-                @apply outline-none w-full pe-2;
+                @apply outline-none w-full pe-2 bg-transparent;
             }
         }
     </style>
@@ -59,40 +59,31 @@
             <form action="" class="w-full max-w-3xl px-4 flex flex-col gap-1" id="signup-form" novalidate>
 
                 <!-- profile picture -->
-                <div id="avatar-div"
-                    class="group rounded-full overflow-hidden w-20 h-20 self-center relative flex justify-center bg-white/50 shadow-md hover:border hover:border-mutedteal hover:scale-101">
-                    <img src="" alt="">
-                    <div 
-                    class="group-hover:opacity-80 opacity-70 transition bg-black absolute inset-0 flex items-center justify-center text-center" id="overlay-avatar">
-                    <label for="avatar" class="text-white text-sm group-hover:underline">Add your
-                        avatar</label>
-                        
+                <div class="flex flex-row justify-center items-start">
+                    <div id="avatar-div"
+                        class="group rounded-full overflow-hidden w-20 h-20 self-center relative flex justify-center bg-white/50 shadow-md hover:border hover:border-mutedteal hover:scale-101">
+                        <img src="" alt="">
+                        <div class="group-hover:opacity-80 opacity-70 transition bg-black absolute inset-0 flex items-center justify-center text-center"
+                            id="overlay-avatar">
+                            <label for="avatar" class="text-white text-sm group-hover:underline">Add your
+                                avatar</label>
+
+                        </div>
                     </div>
+                    <p class="text-pink-800">*</p>
                 </div>
                 <p id="avatar-error" class="text-pink-800 text-md self-between"></p>
                 <input type="file" id="avatar" accept="image/*" hidden>
 
-                <!-- name -->
-                <div class="flex flex-col w-full md:flex-row md:gap-2 ">
+                <!-- full name -->
+                <p class="input-heading">Full name <span class="text-pink-800">*</span></p>
 
-                    <!-- first name -->
-                    <div class="flex flex-col flex-1">
-                        <p class="input-heading">First name</p>
-                        <div class="hover:border-mutedteal input-div">
-                            <i class="fa-regular fa-user input-icon"></i>
-                            <input type="text" placeholder="First Name" id="first-name" class="input">
-                        </div>
-                    </div>
-
-                    <!-- last name -->
-                    <div class="flex flex-col flex-1">
-                        <p class="input-heading">Last name</p>
-                        <div class="hover:border-mutedteal input-div">
-                            <i class="fa-regular fa-user input-icon"></i>
-                            <input type="text" placeholder="Last Name" id="last-name" class="input">
-                        </div>
-                    </div>
+                <div class="hover:border-mutedteal input-div">
+                    <i class="fa-regular fa-user input-icon"></i>
+                    <input type="text" placeholder="Full Name" id="full-name" class="input">
                 </div>
+                <p id="full-name-error" class="text-pink-800 text-md self-start"></p>
+
 
                 <!-- email address -->
                 <p class="input-heading">Email Address <span class="text-pink-800">*</span></p>
@@ -101,7 +92,7 @@
                     <input type="email" placeholder="Email Address" class="input" name="Email" id="email">
                 </div>
                 <p id="email-error" class="text-pink-800 text-md self-start"></p>
-                
+
                 <!-- username -->
                 <p class="input-heading">Username <span class="text-pink-800">*</span></p>
                 <div class="hover:border-mutedteal input-div">
@@ -109,7 +100,7 @@
                     <input type="text" placeholder="Username" class="input" name="Username" id="username">
                 </div>
                 <p id="username-error" class="text-pink-800 text-md self-start"></p>
-                
+
                 <!-- password  -->
                 <p class="input-heading">Password <span class="text-pink-800">*</span></p>
                 <div class="input-div hover:border-mutedteal">
@@ -117,11 +108,11 @@
                     <input type="password" placeholder="Password" class="input" id="password">
                     <button type="button">
                         <i
-                        class="eye-icon fa-regular fa-eye-slash input-icon  hover:text-pink-800 hover:cursor-pointer"></i>
+                            class="eye-icon fa-regular fa-eye-slash input-icon  hover:text-pink-800 hover:cursor-pointer"></i>
                     </button>
                 </div>
                 <p id="password-error" class="text-pink-800 text-md self-start"></p>
-                
+
                 <!-- Confirm password  -->
                 <p class="input-heading">Confirm Passowrd <span class="text-pink-800">*</span></p>
                 <div class="input-div hover:border-mutedteal">
@@ -129,31 +120,17 @@
                     <input type="password" placeholder="Confirm Password" class="input" id="confirm-password">
                     <button type="button">
                         <i
-                        class="eye-icon fa-regular fa-eye-slash input-icon hover:text-pink-800 hover:cursor-pointer"></i>
+                            class="eye-icon fa-regular fa-eye-slash input-icon hover:text-pink-800 hover:cursor-pointer"></i>
                     </button>
                 </div>
                 <p id="confirm-password-error" class="text-pink-800 text-md self-start"></p>
-                
-                <p class="input-heading">Select a role</p>
-                <div class="input-div hover:border-mutedteal">
-                    <i class="fa-solid fa-user-shield input-icon"></i>
-                    <select name="Role" id="role" class="w-full outline-none bg-transparent me-3" id="role">
-                        <option value="user" selected>
-                            User
-                        </option>
-                        <option value="moderator">
-                            Moderator
-                        </option>
-                        <option value="admin">
-                            Admin
-                        </option>
-                    </select>
-                </div>
 
                 <!-- terms and conditions checkbox -->
                 <div class="self-start flex flex-row items-center gap-1 ms-1">
                     <input type="checkbox" class="accent-pink-800 w-4 h-4" id="check-box">
-                    <label for="checkbox1">I agree to the <span class="text-pink-800 hover:underline"><a href="">Terms & Privacy Policy</a></span></label>
+                    <label for="checkbox1">I agree to the <span class="text-pink-800"><a href=""
+                                class="hover:underline">Terms &
+                                Privacy Policy</a> *</span></label>
                 </div>
 
                 <!-- signup button -->
@@ -188,8 +165,8 @@
 
                 <!-- already have an account -->
                 <div class="mt-2">
-                    <p>Already have an account? <span class="ps-1 text-pink-800 hover:underline"><a href="login.html"
-                                target="_blank">Login</a></span></p>
+                    <p>Already have an account? <span class="ps-1 text-pink-800"><a href="login.html"
+                                class="hover:underline">Login</a></span></p>
                 </div>
             </form>
         </section>

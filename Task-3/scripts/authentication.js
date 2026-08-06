@@ -1,14 +1,13 @@
 // elements
 
 const fields = {
-    first_name: document.querySelector('#first-name'),
-    last_name: document.querySelector('#last-name'),
+    full_name: document.querySelector('#full-name'),
     username: document.querySelector('#username'),
     email: document.querySelector('#email'),
     password: document.querySelector('#password'),
     confirm_password: document.querySelector('#confirm-password'),
-    role: document.querySelector('#role'),
     avatar: document.querySelector('#avatar'),
+    checkbox: document.querySelector('#check-box'),
 
     username_or_email: document.querySelector('#username-or-email'),
     login_password: document.querySelector('#login-password'),
@@ -62,6 +61,19 @@ const signup_page = "signup.html";
 
 // inputs
 
+let avatar_touched = false;
+const full_name = {
+    input: fields.full_name,
+    name: "Full Name",
+    valid: false,
+    get value() {
+        return this.input.value.trim();
+    },
+    isEmpty() {
+        return !this.value;
+    },
+    error: document.querySelector('#full-name-error'),
+}
 const email = {
     input: fields.email,
     name: "Email",
@@ -107,11 +119,11 @@ const username = {
             }
         },
         {
-            message: "Cannot contain '@'",
+            message: "Username should only contain letters and numbers",
             check() {
-                return !username.value.includes("@");
+                return /^[a-zA-Z0-9]+$/.test(username.value);
             }
-        }
+        },
     ],
     error: document.querySelector('#username-error'),
 };
@@ -121,7 +133,7 @@ const password = {
     name: 'Password',
     valid: false,
     get value() {
-        return this.input.value.trim();
+        return this.input.value;
     },
     isEmpty() {
         return !this.value;
@@ -144,12 +156,11 @@ const password = {
             check() {
                 return [...password.value].some(char => (char !== ' ') && (!isNaN(char)));
             }
-        },
+        }, 
         {
-            message: "Password should not contain whitespaces",
+            message: "Cannot contain whitespaces",
             check() {
-                if (password.value.includes(" ")) return false;
-                return true;
+                return !password.value.includes(" ");
             }
         }
     ],
@@ -161,7 +172,7 @@ const confirm_password = {
     name: "Confirm Password",
     valid: false,
     get value() {
-        return this.input.value.trim();
+        return this.input.value;
     },
     isEmpty() {
         return !this.value;
@@ -177,21 +188,30 @@ const confirm_password = {
     error: document.querySelector('#confirm-password-error'),
 };
 
+let img_file;
 const avatar = {
     name: "Profile Picture",
     input: fields.avatar,
     valid: false,
     get value() {
-        return this.input.files[0];
+        const file = this.input.files[0];
+        if (file && file.type === "image/webp") {
+            img_file = file;
+            return file;
+        }
+        if (img_file) {
+            return img_file;
+        }
+        return null;
     },
     isEmpty() {
         return !this.value;
     },
     checklist_items: [
         {
-            message: "Only webp images are allowed",
+            message: "Cannot add. Only webp images are allowed",
             check() {
-                return avatar.value && avatar.value.type == "image/webp";
+                return avatar.input.files[0] && avatar.input.files[0].type === "image/webp";
             }
         }
     ],
@@ -222,7 +242,7 @@ const login_password = {
     },
     error: document.querySelector('#login-password-error')
 }
-const fields_to_validate = [username, email, password, confirm_password, avatar];
+const fields_to_validate = [full_name, username, email, password, confirm_password, avatar];
 
 const profile_container = document.querySelector('#avatar-div')
 let profile_img;
@@ -265,12 +285,9 @@ async function login_check(e) {
         fields.submit_button.disabled = true;
         fields.submit_button.textContent = "Logging in...";
         const result = await login(login_fields);
-        localStorage.setItem("access_token", result.data.accessToken);
-        localStorage.setItem("refresh_token", result.data.refreshToken);
-        window.location.href = home_page;
 
         fields.login_form.reset();
-        console.log(result);
+        window.location.href = home_page;
     }
     catch (err) {
         console.log("Error", err);
@@ -296,14 +313,17 @@ async function signup_check(e) {
         fields.required_msg.textContent = "Please fix the errors first";
         return;
     }
+    if (!fields.checkbox.checked) {
+        fields.required_msg.textContent = "Please accept the terms and conditions";
+        return;
+    }
     fields.required_msg.textContent = "";
     const user_data = new FormData();
     user_data.append("userName", username.value);
     user_data.append("email", email.value);
-    user_data.append("fullName", `${fields.first_name.value} ${fields.last_name.value}`);
+    user_data.append("fullName", full_name.value);
     user_data.append("password", password.value);
     user_data.append("avatar", avatar.value);
-    user_data.append("role", fields.role.value);
     try {
         fields.submit_button.disabled = true;
         fields.submit_button.textContent = "Creating Account...";
@@ -311,8 +331,8 @@ async function signup_check(e) {
 
         console.log(result);
         fields.required_msg.textContent = "Account Created Successfully";
-        fields.required_msg.classList.add('text-mutedteal')
-        fields.required_msg.classList.remove('text-pink-800')
+        fields.required_msg.classList.add('text-mutedteal');
+        fields.required_msg.classList.remove('text-pink-800');
         fields.signup_form.reset();
         window.location.href = login_page;
     }
@@ -339,8 +359,7 @@ function removeError(field) {
 }
 
 function validate_field(field) {
-    if (field.isEmpty()) {
-        field.valid = false;
+    if (field.isEmpty() && (field !== avatar || !avatar_touched)) {
         showError(field, `${field.name} is required`)
         return false;
     }
@@ -349,6 +368,9 @@ function validate_field(field) {
         if (failed_rule) {
             field.valid = false;
             showError(field, failed_rule.message);
+            if (field === avatar && field.value) {
+                return true;
+            }
             return false;
         }
     }
@@ -360,7 +382,8 @@ function validate_field(field) {
 async function add_event_listener(field, event) {
     field.input.addEventListener(`${event}`, async () => {
         fields.required_msg.textContent = "";
-        if (field === avatar) {
+        if (field === avatar && event === 'change') {
+            avatar_touched = true;
             if (validate_field(field)) {
                 await preview_img(field.value);
             }
@@ -390,8 +413,8 @@ async function preview_img(file) {
         avatar.valid = false;
     }
 }
-
 if (fields.signup_form) {
+    add_event_listener(full_name, 'blur');
     add_event_listener(password, 'blur');
     add_event_listener(username, 'blur');
     add_event_listener(email, 'blur');
@@ -402,3 +425,9 @@ if (fields.login_form) {
     add_event_listener(login_password, 'blur');
     add_event_listener(login_cred, 'blur');
 }
+
+// click avatar - select image (webp) - store image - no error
+//              - select image (!webp) - if prviouesly selected image is webp - show previous image - show error - donot store - donot stop user from submitting form
+//                                     - if no previous image - show error
+//             - submit form - if image stored - donot stop user from submitting
+//                           - if no image stored - show error - stop user from submitting form'

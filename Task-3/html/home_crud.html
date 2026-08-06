@@ -27,10 +27,15 @@
                 text-shadow: 0 2px 5px rgba(254, 254, 254, 0.71);
             }
         }
+        @layer componenets {
+            .selected {
+                @apply underline font-bold;
+            }
+        }
     </style>
 </head>
 
-<body>
+<body class="hidden">
     <nav class="bg-teal-100 p-4 shadow-md w-full">
         <div class="mx-auto flex justify-between items-center flex-col gap-2 sm:flex-row">
             <div class="flex items-center gap-1">
@@ -41,52 +46,33 @@
             </div>
 
             <ul class="flex gap-10 md:gap-6 text-mutedteal transition">
-                <li><a class="hover:underline hover:font-bold underline font-bold" href="#">Home</a></li>
-                <li><a class="hover:font-bold" href="#">Products</a></li>
-                <li><a class="hover:font-bold" href="#">About</a></li>
+                <li><a class="hover:font-bold selected" href="#home">Home</a></li>
+                <li><a class="hover:font-bold" href="#producs">Products</a></li>
+                <li><a class="hover:font-bold" href="#about">About</a></li>
             </ul>
             <div class="flex flex-row gap-2 items-between justify-center">
                 <button
-                    class="bg-transparent py-1 px-5 border-1 rounded-md text-mutedteal font-semibold border-mutedteal hover:bg-mutedteal/90 hover:scale-105 hover:text-white">Logout</button>
-                    <button class="bg-black rounded-full overflow-hidden flex items-center justify-center hover:shadow-md hover:scale-105 w-9 border-2 border-mutedteal h-9 shadow-md hover:shadow-lg"><img src="../assets/luthfi-alfarizi-gEf9bOMTZtk-unsplash.webp" alt="" class="object-cover" id="avatar"></button>
+                    class="bg-mutedteal py-1 px-5 border-1 rounded-md font-semibold border-mutedteal hover:scale-103 text-white shadow-md hover:shadow-lg hover:bg-mutedteal/90"
+                    id="logout-btn">Logout</button>
+                <button
+                    class="bg-black rounded-full overflow-hidden flex items-center justify-center hover:shadow-md hover:scale-105 w-9 border-2 border-mutedteal h-9 shadow-md hover:shadow-lg"><img
+                        src="" alt="Avatar" class="object-cover" id="avatar"></button>
             </div>
         </div>
     </nav>
     <main>
-        <div class="bg-[url('../assets/johny-goerend-Oz2ZQ2j8We8-unsplash.jpg')] bg-cover bg-center bg-fixed h-100 flex flex-col p-8 justify-center items-center gap-1">
+        <div id="home"
+            class="bg-[url('../assets/johny-goerend-Oz2ZQ2j8We8-unsplash.jpg')] bg-cover bg-center bg-fixed h-120 flex flex-col p-8 justify-center items-center text-center gap-1">
             <h2 class="text-white font-extrabold text-5xl text-shadow-pink">Welcome to <span
-                    class="text-pink-300">our</span> website!</h2>
-            <p class="font-comfortaa text-pink-300 text-shadow-white text-lg">Manage user accounts using crud functions
+                    class="text-pink-300">our</span> website <span class="text-pink-300" id="name-show"></span> !</h2>
+            <p class="font-comfortaa text-white text-shadow-pink text-lg">Manage user accounts using crud functions
             </p>
-        </div>
-        <section class="flex flex-col justify-center items-center bg-gray-100 w-full px-20 py-10 gap-4">
-            <form action="" class="self-end">
-                <input type="text" placeholder="Search" class="p-2 border-1 rounded-md shadow-md border-pink-800">
-                <button type="submit" class="bg-pink-800 text-white p-2 border-1 border-pink-800 rounded-md shadow-md hover:bg-pink/30 hover:shadow-lg hover:scale-105"><i class="fa-solid fa-search mx-1"></i></button>
-            </form>
-            <div class="border rounded-md border-gray-400 w-full overflow-hidden">
-                <table class="w-full">
-                <thead class="bg-mutedteal text-white">
-                    <th class="border border-gray-300 py-2 text-center">ID</th>
-                    <th class="border border-gray-300 py-2 text-center">Username</th>
-                    <th class="border border-gray-300 py-2 text-center">Email</th>
-                    <th class="border border-gray-300 py-2 text-center">Role</th>
-                </thead>
-                <tbody>
-                    <tr class="bg-white">
-                        <td class="border border-gray-300 p-2">aliusman</td>
-                        <td class="border border-gray-300 p-2">aliusman@gmail.com</td>
-                        <td class="border border-gray-300 p-2 rounded-md">Moderator</td>
-                    </tr>
-                    <tr class="bg-gray-200">
-                        <td class="border border-gray-300 p-2">aliasif</td>
-                        <td class="border border-gray-300 p-2">aliasif@gmail.com</td>
-                        <td class="border border-gray-300 p-2">Admin</td>
-                    </tr>
-                </tbody>
+            <div class="flex flex-row justify-center items-center">
+                <button class="bg-white/80 py-3 px-5 mt-4 rounded-md border border-mutedteal text-mutedteal font-semibold hover:bg-white/95 hover:scale-105 shadow-md hover:shadow-lg">
+                    <a href="dashboard.html">Go to Dashboard</a>
+                </button>
             </div>
-            </table>
-        </section>
+        </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
     <script src="../scripts/api.js"></script>
