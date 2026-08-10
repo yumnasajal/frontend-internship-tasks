@@ -43,20 +43,20 @@
             .page-button {
                 @apply w-10 h-10 p-1 rounded-md hover:bg-black/40 hover:scale-103 text-black text-xl;
             }
+            .page-button-disable {
+                @apply w-10 h-10 p-1 rounded-md text-gray-400 text-xl;
+            }
             .admin-tab {
                 @apply w-full flex flex-col justify-center p-10 gap-2;
             }
-            .input-heading {
-                @apply self-start ms-2 mt-1;
+            .info-div {
+                @apply flex items-center gap-4 min-h-[48px] px-3 py-2 border-b border-gray-200;
             }
-            .input-div {
-                @apply flex flex-row items-center border border-gray-200 shadow-md h-10 rounded-lg bg-white/50 w-full;
+            .info-div-icon {
+                @apply w-8 h-8 rounded-lg flex-1 flex items-center justify-center shrink-0;
             }
-            .input-icon {
-                @apply text-gray-700 m-3;
-            }
-            .input {
-                @apply outline-none w-full pe-2 bg-transparent;
+            .info-inner-div {
+                @apply flex items-center justify-between w-[90%];
             }
         }
     </style>
@@ -72,6 +72,9 @@
             </a>
         </div>
         <ul class="h-full mt-5 flex flex-col gap-2 px-1 text-sm w-full">
+            <li class="hover-select px-2 py-1 w-full" data-tab="dashboard"><a href="#"><i
+                        class="fa-regular fa-user"></i>
+                    Dashboard</a></li>
             <li class="hover-select selected px-2 py-1 w-full" data-tab="admin-panel"><a href="#"><i
                         class="fa-solid fa-chart-line"></i>
                     Users</a></li>
@@ -100,155 +103,358 @@
                         src="" alt="Avatar" class="object-cover" id="avatar"></button>
             </div>
         </div>
-        <div class="admin-tab hidden tab" id="admin-panel">
+        <div class="admin-tab tab" id="admin-panel">
             <div>
-                <h2 class="text-2xl font-comfortaa text-shadow-pink">Users Data:</h2>
+                <h2 class="text-2xl font-semibold mb-2">Users Data:</h2>
             </div>
-            <form action="" class="self-end" id="search-field">
-                <input type="text" placeholder="Search" class="p-2 border-1 rounded-md shadow-md border-pink-800"
-                    id="search" name="Search">
-                <button type="submit"
-                    class="bg-pink-800 text-white p-2 border-1 border-pink-800 rounded-md shadow-md hover:bg-pink/30 hover:shadow-lg hover:scale-105"><i
-                        class="fa-solid fa-search mx-1"></i></button>
-            </form>
-            <div class="border rounded-md border-gray-400 w-full overflow-hidden">
-                <table class="w-full" id="user-table">
-                    <thead class="bg-mutedteal text-white">
-                        <tr>
-                            <th class="border border-gray-300 py-2 text-center">Avatar</th>
-                            <th class="border border-gray-300 py-2 text-center">Name</th>
-                            <th class="border border-gray-300 py-2 text-center">Username</th>
-                            <th class="border border-gray-300 py-2 text-center">Email</th>
-                            <th class="border border-gray-300 py-2 text-center">Role</th>
-                            <th class="border border-gray-300 py-2 text-center">Edit</th>
-                            <th class="border border-gray-300 py-2 text-center">Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody id="user-table-body"></tbody>
-                </table>
-            </div>
-            <div class="flex justify-center items-center gap-1">
-                <button class="button-selected page-button" data-page="1">1</button>
-                <button class="page-button" data-page="2">2</button>
-                <button class="page-button" data-page="3">3</button>
-            </div>
-            <div id="user-action-modal" class="hidden fixed inset-0 bg-black/40 flex justify-center items-center">
-                <div class="bg-white rounded-lg p-5 shadow-lg">
-                    <h2 class="text-xl font-bold">User Action</h2>
-                    <p id="modal-user-name"></p>
-                    <div class="flex gap-3 mt-4 ">
-                        <button id="delete-user-btn"
-                            class="bg-red-700 text-white px-3 py-2 rounded hover:scale-103">Delete
-                            Permanently</button>
-                        <button id="cancel-btn" class="bg-gray-400 px-3 py-2 rounded hover:scale-103">Cancel</button>
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-3">
+                <!-- <form action="" class="border rounded-lg shadow-sm border-gray-400 flex items-center justify-center max-w-60"
+                    id="search-field">
+                    <i class="fa-solid fa-magnifying-glass mx-2 text-gray-500"></i>
+                    <input type="text" placeholder="Search" class="p-2 border-none focus:outline-none w-52" id="search"
+                        name="Search">
+                </form> -->
+                <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2">
+                        <label for="user-sort" class="text-sm text-gray-600">
+                            Sort:
+                        </label>
+                        <select id="user-sort" class="border border-gray-300 rounded-md px-3 py-2 bg-white text-sm
+                       focus:outline-none focus:border-mutedteal cursor-pointer">
+                            <option value="-createdAt">Newest</option>
+                            <option value="createdAt">Oldest</option>
+                            <option value="fullName">Name A → Z</option>
+                            <option value="-fullName">Name Z → A</option>
+                            <option value="userName">Username A → Z</option>
+                            <option value="-userName">Username Z → A</option>
+                            <option value="email">Email A → Z</option>
+                            <option value="-email">Email Z → A</option>
+                            <option value="-updatedAt">Recently Updated</option>
+                            <option value="updatedAt">Least Recently Updated</option>
+                            <option value="role">Role A → Z</option>
+                            <option value="-role">Role Z → A</option>
+                        </select>
                     </div>
-                </div>
-            </div>
-            <div id="update-user-modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center">
-                <div class="bg-white p-6 rounded-lg w-96 shadow-lg">
-                    <h2 class="text-xl font-bold mb-4">Update User</h2>
-                    <form id="update-user-form" class="flex flex-col gap-3">
-                        <input id="update-fullname" type="text" placeholder="Full Name" class="border p-2 rounded">
-                        <input id="update-email" type="email" placeholder="Email" class="border p-2 rounded">
-                        <select id="update-role" class="border p-2 rounded">
+                    <div class="flex items-center gap-2">
+                        <label for="user-role-filter" class="text-sm text-gray-600">
+                            Role:
+                        </label>
+                        <select id="user-role-filter" class="border border-gray-300 rounded-md px-3 py-2 bg-white text-sm
+                       focus:outline-none focus:border-mutedteal cursor-pointer">
+                            <option value="">All Roles</option>
                             <option value="user">User</option>
                             <option value="moderator">Moderator</option>
                             <option value="admin">Admin</option>
                         </select>
-                        <select id="update-status" class="border p-2 rounded">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <label for="user-status-filter" class="text-sm text-gray-600">
+                            Status:
+                        </label>
+                        <select id="user-status-filter" class="border border-gray-300 rounded-md px-3 py-2 bg-white text-sm
+                       focus:outline-none focus:border-mutedteal cursor-pointer">
+                            <option value="">All Status</option>
                             <option value="false">Active</option>
                             <option value="true">Disabled</option>
                         </select>
-                        <div class="flex justify-end gap-2">
-                            <button type="button" id="update-cancel-btn"
-                                class="bg-gray-400 px-3 py-1 rounded hover:scale-102">Cancel</button>
-                            <button type="submit"
-                                class="bg-green-600 text-white px-3 py-1 rounded hover:scale-102">Update
+                    </div>
+                </div>
+                <button id="add-user-btn" class="flex items-center gap-2 bg-mutedteal text-white px-4 py-2 rounded-md max-w-33 self-end
+               hover:scale-103 hover:shadow-md transition cursor-pointer">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Add User</span>
+                </button>
+            </div>
+            <div class="border rounded-md border-gray-400 w-full overflow-hidden">
+                <table class="w-full" id="user-table">
+                    <thead class="bg-gray-200 text-mutedteal">
+                        <tr id="user-table-header" class="text-lg h-10"></tr>
+                    </thead>
+                    <tbody id="user-table-body">
+                    </tbody>
+                </table>
+                <template id="user-template">
+                    <tr class="hover:bg-gray-200 border-l-2 border-transparent hover:border-mutedteal">
+                        <td class="border border-gray-300 p-2">
+                            <div class="flex items-center gap-3">
+                                <img class="user-avatar w-10 h-10 rounded-full object-cover">
+                                <div class="flex flex-col">
+                                    <p class="user-name font-semibold"></p>
+                                    <p class="user-username text-sm text-gray-500"></p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="user-email border border-gray-300 p-2"></td>
+                        <td class="user-role border border-gray-300 p-2"></td>
+                        <td class="user-status border border-gray-300 p-2 text-center">
+                            <span class="status-text"></span>
+                            <div class="hidden">
+                                <label
+                                    class="status-toggle relative inline-flex items-center justify-start cursor-pointer select-none rounded-full transition-all duration-200 hover:ring-1 hover:ring-mutedteal">
+                                    <input type="checkbox" class="sr-only" />
+                                    <div
+                                        class="status-bg w-12 h-6 bg-mutedteal/70 rounded-full transition-colors duration-200">
+                                    </div>
+                                    <div
+                                        class="status-button absolute left-[3px] top-[3px] w-[18px] h-[17px] bg-white rounded-full transition-all duration-200">
+                                    </div>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="user-delete border border-gray-300 p-2 text-center hidden">
+                            <button
+                                class="delete-btn border border-red-100 bg-red-100 text-red-700 px-2 py-1 hover:cursor-pointer rounded hover:border-red-700 transition-all duration-200 hover:scale-105">
+                                <i class="fa-solid fa-trash"></i>
                             </button>
+                        </td>
+                    </tr>
+                </template>
+            </div>
+            <div class="flex justify-center items-center gap-1" id="pagination"></div>
+            <div id="user-details-modal"
+                class="hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-6">
+                <div class="bg-white w-full max-w-5xl max-h-[90vh] overflow-auto rounded-2xl shadow-2xl">
+                    <div class="flex justify-between items-center px-6 py-3 border-b border-gray-200">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-full bg-mutedteal/10 flex text-md items-center justify-center">
+                                <i class="fa-solid fa-user text-mutedteal"></i>
+                            </div>
+                            <h2 class="text-lg font-bold text-gray-800">User Details</h2>
                         </div>
-                    </form>
+                    </div>
+                    <div class="flex flex-col md:flex-row overflow-y-auto">
+                        <div id="display-div" class="md:w-[35%] border-b md:border-b-0 md:border-r border-gray-200">
+                            <div class="relative h-40 bg-gray-200 overflow-hidden">
+                                <img id="user-cover" class="w-full h-full object-cover" src="" alt="User cover image">
+                            </div>
+                            <div class="px-5 pb-5">
+                                <div class="relative -mt-16 flex justify-center">
+                                    <img id="user-avatar"
+                                        class="w-28 h-28 rounded-full object-cover border-3 border-white shadow-md bg-gray-200"
+                                        src="" alt="User Avatar">
+                                </div>
+                                <div class="text-center mt-3 flex flex-col items-center ">
+                                    <h3 id="user-full-name" class="text-2xl font-bold text-gray-800"></h3>
+                                    <p id="user-username" class="text-gray-600 mt01"></p>
+                                    <div class="rounded-md px-2 py-1 max-w-4/4">
+                                        <p id="user-role" class="overflow-hidden"></p>
+                                    </div>
+                                    <div class="mt-8 space-y-5 flex gap-3 items-start justify-start self-start ps-2">
+                                        <div
+                                            class="w-11 h-11 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+                                            <i class="fa-regular fa-calendar text-blue-500"></i>
+                                        </div>
+                                        <div class="flex flex-col ">
+                                            <p class="text-sm text-gray-500">Joined On</p>
+                                            <p id="user-created-at"
+                                                class="self-start text-start font-medium text-sm text-gray-800"></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <form id="user-details-form" class="flex-1 px-5 py-3 flex flex-col" novalidate>
+                            <h2 class="text-lg font-semibold text-gray-900">User Information</h2>
+                            <div class="border border-gray-200 rounded-xl overflow-hidden">
+                                <div class="info-div">
+                                    <div class="info-div-icon bg-purple-50">
+                                        <i class="fa-solid fa-user text-purple-500"></i>
+                                    </div>
+                                    <div class="info-inner-div">
+                                        <p class="text-sm text-gray-500">Full Name </p>
+                                        <p id="details-info-full-name" class="font-medium text-gray-700"></p>
+                                        <input id="details-input-full-name" type="text"
+                                            class="hidden w-3/5 border border-gray-300 rounded-md px-2 py-1"
+                                            placeholder="Full Name" />
+                                    </div>
+                                </div>
+                                <div class="info-div">
+                                    <div class="info-div-icon bg-blue-50">
+                                        <i class="fa-solid fa-at text-blue-500"></i>
+                                    </div>
+                                    <div class="info-inner-div">
+                                        <p class="text-sm text-gray-500">Username</p>
+                                        <p class="font-medium text-gray-700" id="details-info-username"></p>
+                                        <input id="details-input-username" type="text" placeholder="Username"
+                                            class="hidden w-3/5 border border-gray-300 rounded-md px-2 py-1" />
+                                    </div>
+                                </div>
+                                <div class="info-div">
+                                    <div class="info-div-icon bg-green-50">
+                                        <i class="fa-regular fa-envelope text-green-500"></i>
+                                    </div>
+                                    <div class="info-inner-div">
+                                        <p class="text-sm text-gray-500">Email</p>
+                                        <p class="font-medium text-gray-700" id="details-info-email"></p>
+                                        <input id="details-input-email" type="email" novalidate placeholder="Email"
+                                            class="hidden w-3/5 border border-gray-300 rounded-md px-2 py-1" />
+                                    </div>
+                                </div>
+                                <div class="info-div">
+                                    <div class="info-div-icon bg-yellow-50">
+                                        <i class="fa-solid fa-shield-halved text-yellow-500"></i>
+                                    </div>
+                                    <div class="info-inner-div">
+                                        <p class="text-sm text-gray-500">Role</p>
+                                        <p class="font-medium text-gray-700" id="details-info-role"></p>
+                                        <select id="details-input-role"
+                                            class="hidden border border-gray-300 rounded-md px-2 py-1 w-3/5">
+                                            <option value="user">User</option>
+                                            <option value="moderator">Moderator</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="info-div">
+                                    <div class="info-div-icon bg-green-50">
+                                        <i class="fa-solid fa-toggle-on text-green-500"></i>
+                                    </div>
+                                    <div class="info-inner-div">
+                                        <p class="text-sm text-gray-500">Status</p>
+                                        <p class="font-medium text-gray-700" id="details-info-status"></p>
+                                        <select id="details-input-status"
+                                            class="hidden border border-gray-300 rounded-md px-2 py-1 w-3/5">
+                                            <option value="active">Active</option>
+                                            <option value="disabled">Disabled</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="info-div">
+                                    <div class="info-div-icon bg-orange-50">
+                                        <i class="fa-regular fa-calendar text-orange-500"></i>
+                                    </div>
+                                    <div class="info-inner-div">
+                                        <p class="text-sm text-gray-500">Account Created</p>
+                                        <p class="font-medium text-gray-700" id="details-info-created"></p>
+                                    </div>
+                                </div>
+                                <div class="info-div">
+                                    <div class="info-div-icon bg-pink-50">
+                                        <i class="fa-solid fa-pencil text-pink-500"></i>
+                                    </div>
+                                    <div class="info-inner-div">
+                                        <p class="text-sm text-gray-500">Last Edited</p>
+                                        <p class="font-medium text-gray-700" id="details-info-edited"></p>
+                                    </div>
+                                </div>
+                                <div class="info-div">
+                                    <div class="info-div-icon bg-gray-50">
+                                        <i class="fa-solid fa-hashtag text-gray-500"></i>
+                                    </div>
+                                    <div class="info-inner-div">
+                                        <p class="text-sm text-gray-500">User ID</p>
+                                        <p class="font-medium text-gray-700" id="details-info-id"></p>
+                                    </div>
+                                </div>
+                                <div class="info-div hidden" id="add-password-div">
+                                    <div class="info-div-icon bg-pink-50">
+                                        <i class="fa-solid fa-lock text-pink-500"></i>
+                                    </div>
+                                    <div class="info-inner-div">
+                                        <p class="text-sm text-gray-500">Password <span class="text-red-500">*</span>
+                                        </p>
+                                        <input id="details-input-password" type="text" placeholder="Password"
+                                            class=" w-3/5 border border-gray-300 rounded-md px-2 py-1" />
+                                    </div>
+                                </div>
+                                <div class="info-div hidden" id="add-avatar-div">
+                                    <div class="info-div-icon bg-gray-50">
+                                        <i class="fa-solid fa-image text-gray-500"></i>
+                                    </div>
+                                    <div class="info-inner-div">
+                                        <p class="text-sm text-gray-500">
+                                            Avatar
+                                        </p>
+                                        <div class="flex items-center gap-3">
+                                            <label for="details-input-avatar"
+                                                class="cursor-pointer border border-gray-300 rounded-md px-3 py-1 hover:border-mutedteal transition">
+                                                Choose Image
+                                            </label>
+                                            <span id="avatar-file-name" class="text-sm text-gray-500">
+                                                No file selected
+                                            </span>
+                                            <input id="details-input-avatar" type="file" accept="image/*"
+                                                class="hidden">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="info-div hidden" id="add-cover-div">
+                                    <div class="info-div-icon bg-red-50">
+                                        <i class="fa-solid fa-image text-red-500"></i>
+                                    </div>
+                                    <div class="info-inner-div">
+                                        <p class="text-sm text-gray-500">
+                                            Cover Image
+                                        </p>
+                                        <div class="flex items-center gap-3">
+                                            <label for="details-input-cover"
+                                                class="cursor-pointer border border-gray-300 rounded-md px-3 py-1 hover:border-mutedteal transition">
+                                                Choose Image
+                                            </label>
+                                            <span id="cover-file-name" class="text-sm text-gray-500">
+                                                No file selected
+                                            </span>
+                                            <input id="details-input-cover" type="file" accept="image/*" class="hidden">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p id="error-msg" class="text-red-600"></p>
+                            <div class="flex items-center justify-end gap-2 mt-2">
+                                <button type="submit" id="details-save-btn"
+                                    class="hidden border rounded-md border-green-600 py-1 px-3 text-green-600 hover:text-white hover:bg-green-600 hover:scale-103 transition">
+                                    Save
+                                </button>
+                                <button id="details-cancel-btn" type="button"
+                                    class="hidden border rounded-md border-gray-500 py-1 px-3 text-gray-600 hover:text-white hover:bg-gray-500 hover:scale-103 hover:cursor-pointer transition duration-50">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="flex-1 flex items-center justify-end gap-2 py-1 px-5 mb-4">
+                        <button id="details-edit-btn"
+                            class="hidden border rounded-md border-mutedteal py-1 px-3 text-mutedteal hover:text-white hover:bg-mutedteal hover:scale-103 hover:cursor-pointer transition duration-50">
+                            Edit
+                        </button>
+                        <button id="details-delete-btn"
+                            class="hidden border rounded-md border-red-700 py-1 px-3 text-red-700 hover:text-white hover:bg-red-700 hover:scale-103 hover:cursor-pointer transition duration-50">
+                            Delete
+                        </button>
+                        <button id="details-close-btn"
+                            class="border rounded-md border-gray-700 py-1 px-3 text-gray-700 hover:text-white hover:text-semibold hover:scale-103 hover:bg-gray-700 hover:cursor-pointer transition duration-50">
+                            Close
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="admin-tab hidden tab flex flex-col gap-2" id="add-user">
-            <div>
-                <h2 class="text-xl font-comfortaa text-shadow-pink">Add a user</h2>
-                <form action="" class="w-full max-w-2/3 px-4 flex flex-col items-start gap-1" id="admin-register-form"
-                    novalidate>
-
-
-                    <!-- full name -->
-                    <p class="input-heading">Full name <span class="text-pink-800">*</span></p>
-
-                    <div class="hover:border-mutedteal input-div">
-                        <i class="fa-regular fa-user input-icon"></i>
-                        <input type="text" placeholder="Full Name" id="full-name" class="input">
+            <div id="user-action-modal"
+                class="z-[60] hidden fixed inset-0 bg-black/40 flex justify-center items-center">
+                <div class="bg-white rounded-lg p-6 shadow-lg">
+                    <h2 class="text-xl font-bold">User Action</h2>
+                    <p id="modal-user-name"></p>
+                    <div class="flex gap-3 mt-4 justify-end">
+                        <button class="delete-user-btn bg-red-700 text-white px-3 py-2 rounded hover:scale-103">Delete
+                            Permanently</button>
+                        <button class="cancel-btn bg-gray-400 px-3 py-2 rounded hover:scale-103">Cancel</button>
                     </div>
+                </div>
+            </div>
 
-                    <!-- email address -->
-                    <p class="input-heading">Email Address <span class="text-pink-800">*</span></p>
-                    <div class="hover:border-mutedteal input-div">
-                        <i class="fa-regular fa-envelope input-icon"></i>
-                        <input type="email" placeholder="User's Email Address" class="input" name="Email" id="email">
+            <div id="deleted-modal" class="z-[70] hidden fixed inset-0 bg-black/40 flex justify-center items-center">
+                <div class="bg-white rounded-lg p-6 shadow-lg">
+                    <p class="deleted-username"></p>
+                    <div class="flex mt-4 justify-end"><button
+                            class="ok-button bg-mutedteal text-white px-3 py-2 rounded hover:scale-103">OK</button>
                     </div>
-
-                    <!-- username -->
-                    <p class="input-heading">Username <span class="text-pink-800">* </span></p>
-                    <div class="hover:border-mutedteal input-div">
-                        <i class="fa-regular fa-address-book input-icon"></i>
-                        <input type="text" placeholder="Unique username (alphanumeric)" class="input" name="Username"
-                            id="username">
-                    </div>
-
-                    <!-- password  -->
-                    <p class="input-heading">Password <span class="text-pink-800">*</span></p>
-                    <div class="input-div hover:border-mutedteal">
-                        <i class="fa-solid fa-lock input-icon"></i>
-                        <input type="text" placeholder="User's Password" class="input" id="password">
-                    </div>
-
-                    <!-- profile picture -->
-                    <p class="input-heading">Avatar Image (webp) <span class="text-pink-800">*</span></p>
-                    <div class="input-div hover:border-mutedteal">
-                        <i class="fa-solid fa-image input-icon"></i>
-                        <label for="user-avatar" class="px-1 bg-gray-200 rounded-md hover:scale-102 hover:border">Choose
-                            file</label><span id="avatar-name" class="text-gray-500 ps-1 flex-1 min-w-0 truncate"> No
-                            file choosen</span>
-                        <input type="file" id="user-avatar" accept="image/*" hidden>
-                    </div>
-
-                    <!-- Cover Image -->
-                    <p class="input-heading">Cover Imagee (webp)<span class="text-pink-800">*</span></p>
-                    <div class="input-div hover:border-mutedteal">
-                        <i class="fa-regular fa-image input-icon"></i>
-                        <label for="cover-img" class="px-1 bg-gray-200 rounded-md hover:scale-102 hover:border">Choose
-                            file</label><span id="cover-name" class="text-gray-500 ps-1 flex-1 min-w-0 truncate"> No
-                            file choosen</span>
-                        <input type="file" id="cover-img" accept="image/*" hidden>
-                    </div>
-
-                    <p class="input-heading">Select a role</p>
-                    <div class="input-div hover:border-mutedteal">
-                        <i class="fa-solid fa-user-shield input-icon"></i>
-                        <select name="Role" id="role" class="w-full me-2">
-                            <option value="user">User</option>
-                            <option value="moderator">Moderator</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div>
-
-                    <p class="text-red-600" id="required-msg"></p>
-                    <!-- signup button -->
-                    <button type="submit"
-                        class="mt-3 h-9 rounded-lg text-white bg-gradient-to-r from-pink-800 to-mutedteal hover:from-mutedteal hover:to-pink-800 transition duration-300 ease-in-out shadow-md hover:shadow-lg w-full hover:scale-101"
-                        id="submit-button">Register</button>
-                </form>
+                </div>
             </div>
         </div>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.13.2/dist/axios.min.js"></script>
     <script src="../scripts/api.js"></script>
-    <script src="../scripts/home.js"></script>
+    <script src="../scripts/users.js"></script>
 </body>
 
 </html>

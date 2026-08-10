@@ -29,8 +29,24 @@ async function logout(){
     return res;
 }
 
-async function get_users(page=1, limit= 10) {
-    const res = await apiRequest(`/user/allUsers?page=${page}&limit=${limit}`, {method: "GET", credentials: "include"});
+// async function get_users(page=1, limit= 10, filters ={}) {
+//     const res = await apiRequest(`/user/allUsers?page=${page}&limit=${limit}`, {method: "GET", credentials: "include"});
+//     return res;
+// }
+async function get_users(page = 1, limit = 10, filters = {}) {
+    const params = new URLSearchParams();
+    params.append('page', page);
+    params.append('limit', limit);
+    if (filters.sort) {
+        params.append('sort', filters.sort);
+    }
+    if (filters.role) {
+        params.append('role', filters.role)
+    }
+    if (filters.isDisabled !== "" && filters.isDisabled !== undefined) {
+        params.append('isDisabled', filters.isDisabled);
+    }
+    const res = await apiRequest(`/user/allUsers?${params.toString()}`, { method: "GET", credentials: "include" });
     return res;
 }
 
